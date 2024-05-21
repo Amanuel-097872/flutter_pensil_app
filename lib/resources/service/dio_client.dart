@@ -13,8 +13,7 @@ class DioClient {
     this._dio, {
     this.baseEndpoint,
     this.logging = false,
-  })  : assert(baseEndpoint != null),
-        assert(logging != null) {
+  }) {
     if (logging) {
       _dio.interceptors.add(
         LogInterceptor(
@@ -43,7 +42,7 @@ class DioClient {
         options: options,
         queryParameters: queryParameters,
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw _handleError(e);
     }
   }
@@ -59,7 +58,7 @@ class DioClient {
         data: data,
         options: options,
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw _handleError(e);
     }
   }
@@ -75,7 +74,7 @@ class DioClient {
         data: data,
         options: options,
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw _handleError(e);
     }
   }
@@ -98,7 +97,7 @@ class DioClient {
     }
   }
 
-  Exception _handleError(DioError e) {
+  Exception _handleError(DioException e) {
     String message;
     if (e.response.statusCode == 404 && e.response.data == "Not found!") {
       message = "Not Found!";

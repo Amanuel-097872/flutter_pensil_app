@@ -17,11 +17,9 @@ class VideoState extends BaseState {
     this.subject = subject;
     this.isEditMode = isEditMode ?? false;
     this.videoModel = videoModel ?? VideoModel();
-    if (videoModel != null) {
-      thumbnailUrl = videoModel.thumbnailUrl;
-      videoUrl = videoModel.videoUrl;
+    thumbnailUrl = videoModel.thumbnailUrl;
+    videoUrl = videoModel.videoUrl;
     }
-  }
   String batchId;
   String videoUrl;
   String thumbnailUrl;
@@ -52,7 +50,6 @@ class VideoState extends BaseState {
 
   Future<bool> addVideo(String title, String description) async {
     try {
-      assert(subject != null);
       var model = videoModel.copyWith(
           title: title,
           description: description,
@@ -65,24 +62,15 @@ class VideoState extends BaseState {
       final data = await execute(() async {
         return await repo.addVideo(model, isEdit: isEditMode);
       }, label: "addVideo");
-      if (data != null) {
-        /// If video is uploaded
-        if (file != null) {
-          bool ok = await upload(data.id);
-          isBusy = false;
-          if (ok != null && ok) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-
-        /// If video link is used
-        else {
-          return true;
-        }
+      /// If video is uploaded
+      bool ok = await upload(data.id);
+      isBusy = false;
+      if (ok) {
+        return true;
+      } else {
+        return false;
       }
-      return false;
+                return false;
     } catch (error, strackTrace) {
       log("addVideo", error: error, stackTrace: strackTrace);
       return null;
@@ -107,10 +95,8 @@ class VideoState extends BaseState {
       final getit = GetIt.instance;
       final repo = getit.get<BatchRepository>();
       list = await repo.getVideosList(batchId);
-      if (list != null) {
-        list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      }
-      notifyListeners();
+      list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          notifyListeners();
       isBusy = false;
     }, label: "getVideosList");
   }

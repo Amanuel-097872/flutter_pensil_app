@@ -10,7 +10,6 @@ import 'package:flutter_pensil_app/ui/kit/overlay_loader.dart';
 import 'package:flutter_pensil_app/ui/page/batch/pages/video/add_video_page.dart';
 import 'package:flutter_pensil_app/ui/page/batch/pages/video/video_player_pag2e.dart';
 import 'package:flutter_pensil_app/ui/page/batch/widget/tile_action_widget.dart';
-import 'package:flutter_pensil_app/ui/page/common/web_view.page.dart';
 import 'package:flutter_pensil_app/ui/theme/theme.dart';
 import 'package:flutter_pensil_app/ui/widget/p_chiip.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +28,7 @@ class BatchVideoCard extends StatelessWidget {
 
   Widget _picture(String url) {
     // return empty widget if space has no pictures
-    if (url == null || !(url.contains("jpg") || url.contains("png"))) {
+    if (!(url.contains("jpg") || url.contains("png"))) {
       return ClipRRect(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(5),
@@ -68,7 +67,6 @@ class BatchVideoCard extends StatelessWidget {
         fit: BoxFit.cover,
         loadingBuilder: (BuildContext context, Widget child,
             ImageChunkEvent loadingProgress) {
-          if (loadingProgress == null) return child;
           return Center(
             child: CircularProgressIndicator(
               value: loadingProgress.expectedTotalBytes != null
@@ -124,14 +122,9 @@ class BatchVideoCard extends StatelessWidget {
           Expanded(
               child: InkWell(
             onTap: () {
-              if (model.video != null) {
-                Navigator.push(context,
-                    VideoPlayerPage2.getRoute(model.video, title: model.title));
-              } else if (model.videoUrl != null) {
-                Navigator.push(context,
-                    WebViewPage.getRoute(model.videoUrl, title: model.title));
-              }
-            },
+              Navigator.push(context,
+                  VideoPlayerPage2.getRoute(model.video, title: model.title));
+                        },
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
@@ -141,7 +134,7 @@ class BatchVideoCard extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     model.title,
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.titleSmall,
                     maxLines: 3,
                   ),
                   // Text(model.description,style: Theme.of(context).textTheme.bodyText2,maxLines: 2, ),
@@ -151,7 +144,7 @@ class BatchVideoCard extends StatelessWidget {
                     children: <Widget>[
                       PChip(
                         backgroundColor: PColors.randomColor(model.subject),
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium.copyWith(
                               color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -161,7 +154,7 @@ class BatchVideoCard extends StatelessWidget {
                       ),
                       Text(
                         Utility.toDMformate(model.createdAt),
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                             color: Theme.of(context).disabledColor),

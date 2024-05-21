@@ -426,7 +426,6 @@ class ApiGatewayImpl implements ApiGateway {
   Future<List<AnnouncementModel>> getBatchAnnouncemantList(
       String batchId) async {
     try {
-      assert(batchId != null);
       String token = await pref.getAccessToken();
       final header = {"Authorization": "Bearer " + token};
       final response = await _dioClient.get(
@@ -443,7 +442,6 @@ class ApiGatewayImpl implements ApiGateway {
   @override
   Future<List<AssignmentModel>> getAssignmentList(String batchId) async {
     try {
-      assert(batchId != null);
       String token = await pref.getAccessToken();
       final header = {"Authorization": "Bearer " + token};
       var isStudent = await pref.isStudent();
@@ -462,7 +460,6 @@ class ApiGatewayImpl implements ApiGateway {
   Future<QuizDetailModel> getAssignmentDetailList(
       String batchId, String assgnmentId) async {
     try {
-      assert(batchId != null);
       String token = await pref.getAccessToken();
       final header = {"Authorization": "Bearer " + token};
       var isStudent = await pref.isStudent();

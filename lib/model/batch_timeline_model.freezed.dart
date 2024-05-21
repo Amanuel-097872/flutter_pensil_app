@@ -122,9 +122,7 @@ class __$BatchTimelineCopyWithImpl<$Res>
 class _$_BatchTimeline extends _BatchTimeline with DiagnosticableTreeMixin {
   const _$_BatchTimeline(
       {@required this.type, @required this.createdAt, @required this.datum})
-      : assert(type != null),
-        assert(createdAt != null),
-        assert(datum != null),
+      : assert(datum != null),
         super._();
 
   factory _$_BatchTimeline.fromJson(Map<String, dynamic> json) =>

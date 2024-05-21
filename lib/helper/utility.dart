@@ -7,7 +7,7 @@ class Utility {
       {String msg = "Feature is under development",
       GlobalKey<ScaffoldState> key}) {
     final snackBar = SnackBar(content: Text(msg));
-    if (key != null && key.currentState != null) {
+    if (key.currentState != null) {
       key.currentState.hideCurrentSnackBar();
       key.currentState.showSnackBar(snackBar);
     } else {
@@ -54,7 +54,7 @@ class Utility {
   }
 
   static String getPassedTime(String date) {
-    if (date == null || date.isEmpty) {
+    if (date.isEmpty) {
       return '';
     }
     String msg = '';

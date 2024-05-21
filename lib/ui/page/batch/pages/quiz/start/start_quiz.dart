@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/helper/images.dart';
@@ -70,7 +69,7 @@ class _StartQuizPageState extends State<StartQuizPage> {
                 builder: (BuildContext context, int value, Widget child) {
                   return Text(
                     "question: ${value + 1}/${state.quizModel.questions.length}",
-                    style: theme.textTheme.bodyText1
+                    style: theme.textTheme.bodyLarge
                         .copyWith(fontWeight: FontWeight.bold),
                   );
                 },
@@ -177,7 +176,7 @@ class _StartQuizPageState extends State<StartQuizPage> {
               },
               child: Text(
                 "Previous",
-                style: theme.textTheme.bodyText1.copyWith(
+                style: theme.textTheme.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold, color: theme.primaryColor),
               ),
             ),
@@ -193,7 +192,7 @@ class _StartQuizPageState extends State<StartQuizPage> {
               },
               child: Text(
                 "Next",
-                style: theme.textTheme.bodyText1.copyWith(
+                style: theme.textTheme.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold, color: theme.primaryColor),
               ),
             ),
@@ -214,12 +213,12 @@ class _StartQuizPageState extends State<StartQuizPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text("Nothing  to see here",
-              style: Theme.of(context).textTheme.headline6.copyWith(
+              style: Theme.of(context).textTheme.titleLarge.copyWith(
                     color: PColors.gray,
                   )),
           SizedBox(height: 10),
           Text("No Assignment is uploaded yet for this batch!!",
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center),
         ],
       ),
@@ -273,7 +272,7 @@ class _StartQuizPageState extends State<StartQuizPage> {
                 Image.asset(Images.timer, height: 20),
                 SizedBox(width: 10),
                 Text(timerText,
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge.copyWith(
                           fontWeight: FontWeight.bold,
                         )),
               ],
@@ -283,7 +282,7 @@ class _StartQuizPageState extends State<StartQuizPage> {
               "$unAnswered  Unanswered questions",
               style: Theme.of(context)
                   .textTheme
-                  .bodyText1
+                  .bodyLarge
                   .copyWith(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 12),
@@ -311,7 +310,7 @@ class _StartQuizPageState extends State<StartQuizPage> {
                 // disabledColor: PColors.gray,
                 child: Text(
                   "Go back to quiz",
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
                       color: isTimerEnd
                           ? PColors.gray
@@ -339,7 +338,7 @@ class _StartQuizPageState extends State<StartQuizPage> {
       ),
       child: Text(
         "${index + 1}",
-        style: Theme.of(context).textTheme.bodyText1.copyWith(
+        style: Theme.of(context).textTheme.bodyLarge.copyWith(
               color: model.selectedAnswer != null ? Colors.white : Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -358,18 +357,17 @@ class _StartQuizPageState extends State<StartQuizPage> {
             Image.asset(Images.timer, height: 20),
             SizedBox(width: 10),
             Consumer<QuizState>(builder: (context, state, child) {
-              if (state.quizModel != null && state.quizModel.duration != null)
-                return Timer(
-                    duration: state.quizModel.duration,
-                    onTimerComplete: onTimerComplete,
-                    onTimerChanged: (value) {
-                      remianingTime = value;
-                    },
-                    timeTaken: (val) {
-                      timeTaken = val;
-                    });
+              return Timer(
+                  duration: state.quizModel.duration,
+                  onTimerComplete: onTimerComplete,
+                  onTimerChanged: (value) {
+                    remianingTime = value;
+                  },
+                  timeTaken: (val) {
+                    timeTaken = val;
+                  });
               return Text("",
-                  style: theme.textTheme.bodyText1
+                  style: theme.textTheme.bodyLarge
                       .copyWith(fontWeight: FontWeight.bold));
             }),
           ],
@@ -377,7 +375,7 @@ class _StartQuizPageState extends State<StartQuizPage> {
         actions: [
           Center(
             child: Text("Submit",
-                    style: theme.textTheme.button
+                    style: theme.textTheme.labelLarge
                         .copyWith(color: theme.primaryColor))
                 .p16
                 .ripple(() {
@@ -391,7 +389,7 @@ class _StartQuizPageState extends State<StartQuizPage> {
           if (state.isBusy) {
             return Ploader();
           }
-          if (!(state.quizModel != null && state.quizModel.questions != null)) {
+          if (!(state.quizModel.questions != null)) {
             return noQuiz();
           }
           return Container(

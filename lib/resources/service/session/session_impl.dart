@@ -40,13 +40,9 @@ class SessionServiceImpl implements SessionService {
       return await handler();
     } on ApiUnauthorizedException catch (_) {
       final session = await loadSession();
-      if (session != null) {
-        await refreshSession();
-        return await handler();
-      } else {
-        return null;
-      }
-    }
+      await refreshSession();
+      return await handler();
+        }
   }
 
   @override

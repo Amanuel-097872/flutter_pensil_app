@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/config/config.dart';
-import 'package:flutter_pensil_app/helper/images.dart';
 import 'package:flutter_pensil_app/helper/utility.dart';
 import 'package:flutter_pensil_app/states/auth/auth_state.dart';
 import 'package:flutter_pensil_app/ui/kit/alert.dart';
-import 'package:flutter_pensil_app/ui/page/auth/update_password.dart';
 import 'package:flutter_pensil_app/ui/page/auth/widgets/Otp_widget.dart';
 import 'package:flutter_pensil_app/ui/theme/theme.dart';
 import 'package:flutter_pensil_app/ui/widget/p_button.dart';
@@ -54,7 +52,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         text,
         style: Theme.of(context)
             .textTheme
-            .headline6
+            .titleLarge
             .copyWith(fontSize: 26, color: Colors.white),
       ),
     );
@@ -90,7 +88,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       final state = Provider.of<AuthState>(context, listen: false);
       isLoading.value = true;
       final isSucess = await state.verifyOtp();
-      if (isSucess != null && isSucess) {
+      if (isSucess) {
         widget.onSucess();
       } else {
         Alert.sucess(
@@ -137,7 +135,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             SizedBox(height: 10),
             Text(
               "Please enter OTP we’ve sent you on ${state.email ?? state.mobile}",
-              style: theme.textTheme.bodyText2.copyWith(
+              style: theme.textTheme.bodyMedium.copyWith(
                 fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,

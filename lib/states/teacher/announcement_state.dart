@@ -64,11 +64,9 @@ class AnnouncementState extends BaseState {
       final getit = GetIt.instance;
       final repo = getit.get<BatchRepository>();
       batchAnnouncementList = await repo.getBatchAnnouncemantList(batchId);
-      if (batchAnnouncementList != null) {
-        batchAnnouncementList
-            .sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      }
-      notifyListeners();
+      batchAnnouncementList
+          .sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          notifyListeners();
       isBusy = false;
     }, label: "getBatchAnnouncementList");
   }
@@ -76,7 +74,6 @@ class AnnouncementState extends BaseState {
   Future<AnnouncementModel> createAnnouncement(
       {String title, String description, List<BatchModel> batches}) async {
     try {
-      assert(title != null);
       var model = announcementModel.copyWith(
         // title:title,
         batches: batches == null
@@ -91,20 +88,18 @@ class AnnouncementState extends BaseState {
       final getit = GetIt.instance;
       final repo = getit.get<BatchRepository>();
       final data = await repo.createAnnouncement(model, isEdit: isEditMode);
-      if (data != null) {
-        if (imagefile != null || docfile != null) {
-          var ok = await upload(
-            data.id,
-          );
-          isBusy = false;
-          if (ok != null && ok) {
-            return model;
-          } else {
-            return null;
-          }
+      if (imagefile != null || docfile != null) {
+        var ok = await upload(
+          data.id,
+        );
+        isBusy = false;
+        if (ok) {
+          return model;
+        } else {
+          return null;
         }
       }
-      return model;
+          return model;
     } catch (error, strackTrace) {
       log("createBatch", error: error, stackTrace: strackTrace);
       return null;
@@ -125,7 +120,6 @@ class AnnouncementState extends BaseState {
   }
 
   void onAnnouncementDeleted(AnnouncementModel model) {
-    if (model == null) return;
     batchAnnouncementList.removeWhere((element) => element.id == model.id);
     notifyListeners();
   }

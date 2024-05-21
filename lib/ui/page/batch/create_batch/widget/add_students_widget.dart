@@ -32,8 +32,7 @@ class AddStudentsWidget extends StatelessWidget {
         builder: (context, state, child) {
           return Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
-              children: !(state.contactList != null &&
-                      state.contactList.isNotEmpty)
+              children: !(state.contactList.isNotEmpty)
                   ? <Widget>[SizedBox.shrink()]
                   : state.contactList
                       .map((e) => PChip(

@@ -19,7 +19,6 @@ import 'package:flutter_pensil_app/ui/widget/p_avatar.dart';
 import 'package:flutter_pensil_app/ui/widget/p_chiip.dart';
 import 'package:flutter_pensil_app/ui/widget/p_loader.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_pensil_app/ui/theme/theme.dart';
 
 class BatchDetailPage extends StatelessWidget {
   const BatchDetailPage({Key key, this.batchModel, this.loader})
@@ -36,7 +35,7 @@ class BatchDetailPage extends StatelessWidget {
       text,
       style: Theme.of(context)
           .textTheme
-          .headline6
+          .titleLarge
           .copyWith(fontSize: fontSize, fontWeight: FontWeight.w500),
     );
   }
@@ -44,7 +43,7 @@ class BatchDetailPage extends StatelessWidget {
   Widget _timing(context, BatchTimeSlotModel model) {
     return Text(
       "${model.toshortDay()}  ${Utility.timeFrom24(model.startTime)} - ${Utility.timeFrom24(model.endTime)}",
-      style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 16),
+      style: Theme.of(context).textTheme.bodyMedium.copyWith(fontSize: 16),
     );
   }
 
@@ -57,7 +56,7 @@ class BatchDetailPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: 5),
                         child: UsernameWidget(
                           name: model.name,
-                          textStyle: theme.textTheme.bodyText1.copyWith(
+                          textStyle: theme.textTheme.bodyLarge.copyWith(
                               fontSize: 12, color: theme.colorScheme.onPrimary),
                           backGroundColor: PColors.randomColor(model.name),
                         ),
@@ -85,19 +84,18 @@ class BatchDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _title(context, batchModel.name).vP8,
-                  if (batchModel.subject != null)
-                    Wrap(
-                      children: <Widget>[
-                        PChip(
-                          style: theme.textTheme.bodyText1
-                              .copyWith(color: theme.colorScheme.onPrimary),
-                          borderColor: Colors.transparent,
-                          label: batchModel.subject,
-                          backgroundColor:
-                              PColors.randomColor(batchModel.subject),
-                        ),
-                      ],
-                    ),
+                  Wrap(
+                    children: <Widget>[
+                      PChip(
+                        style: theme.textTheme.bodyLarge
+                            .copyWith(color: theme.colorScheme.onPrimary),
+                        borderColor: Colors.transparent,
+                        label: batchModel.subject,
+                        backgroundColor:
+                            PColors.randomColor(batchModel.subject),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 19),
                   Row(
                     children: <Widget>[
@@ -147,8 +145,7 @@ class BatchDetailPage extends StatelessWidget {
             if (state.isBusy) {
               return SliverToBoxAdapter(child: PCLoader(stroke: 2));
             }
-            if (state.batchAnnouncementList != null &&
-                state.batchAnnouncementList.isNotEmpty)
+            if (state.batchAnnouncementList.isNotEmpty)
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
@@ -192,7 +189,7 @@ class BatchDetailPage extends StatelessWidget {
         // SliverToBoxAdapter(child: Divider()),
         // Batch video, announcement, study material timeline
         Consumer<BatchDetailState>(builder: (context, state, child) {
-          if (state.timeLineList != null && state.timeLineList.isNotEmpty) {
+          if (state.timeLineList.isNotEmpty) {
             return SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 if (index == 0)

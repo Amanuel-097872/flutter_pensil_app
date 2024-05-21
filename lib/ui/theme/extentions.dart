@@ -89,10 +89,8 @@ extension OnPressed on Widget {
             child: FlatButton(
                 shape: RoundedRectangleBorder(borderRadius: borderRadius),
                 onPressed: () {
-                  if (onPressed != null) {
-                    onPressed();
-                  }
-                },
+                  onPressed();
+                                },
                 child: Container()),
           )
         ],
@@ -124,7 +122,7 @@ extension ExAlignment on Widget {
 
 extension StringHelper on String {
   String takeOnly(int value) {
-    if (this != null && this.length >= value) {
+    if (this.length >= value) {
       return this.substring(0, value);
     } else {
       return this;

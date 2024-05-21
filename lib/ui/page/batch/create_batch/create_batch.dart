@@ -1,7 +1,5 @@
 import 'package:contacts_service/contacts_service.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pensil_app/helper/utility.dart';
 import 'package:flutter_pensil_app/model/actor_model.dart';
 import 'package:flutter_pensil_app/model/batch_model.dart';
 import 'package:flutter_pensil_app/model/batch_time_slot_model.dart';
@@ -84,7 +82,7 @@ class _CreateBatchState extends State<CreateBatch> {
                                   borderRadius: BorderRadius.circular(20)),
                               child: Text(
                                 e.name,
-                                style: theme.textTheme.bodyText1.copyWith(
+                                style: theme.textTheme.bodyLarge.copyWith(
                                     fontSize: 10,
                                     color: !e.isSelected
                                         ? Colors.black
@@ -107,7 +105,7 @@ class _CreateBatchState extends State<CreateBatch> {
     return Text(name,
         style: Theme.of(context)
             .textTheme
-            .bodyText1
+            .bodyLarge
             .copyWith(fontWeight: FontWeight.bold, fontSize: 16));
   }
 
@@ -119,7 +117,7 @@ class _CreateBatchState extends State<CreateBatch> {
         icon: Icon(Icons.add_circle, color: PColors.primary, size: 17),
         label: Text(
           label,
-          style: theme.textTheme.button
+          style: theme.textTheme.labelLarge
               .copyWith(color: PColors.primary, fontWeight: FontWeight.bold),
         ));
   }
@@ -127,7 +125,7 @@ class _CreateBatchState extends State<CreateBatch> {
   void displayStudentsList() async {
     final list =
         Provider.of<CreateBatchStates>(context, listen: false).studentsList;
-    if (!(list != null && list.isNotEmpty)) {
+    if (!(list.isNotEmpty)) {
       return;
     }
     print(list.length);
@@ -173,7 +171,7 @@ class _CreateBatchState extends State<CreateBatch> {
   }
 
   void saveSubject() async {
-    if (_subject.text != null && _subject.text.isNotEmpty) {
+    if (_subject.text.isNotEmpty) {
       addSubjectLoading.value = true;
       final state = Provider.of<CreateBatchStates>(context, listen: false);
       state.addNewSubject(_subject.text);
@@ -218,25 +216,18 @@ class _CreateBatchState extends State<CreateBatch> {
     state.setDeviceSelectedContacts(deviceContact.value);
     final newBatch = await state.createBatch();
     isLoading.value = false;
-    if (newBatch != null) {
-      var message = state.isEditBatch
-          ? "Batch updated sucessfully!!"
-          : "Batch is sucessfully created!!";
-      Alert.sucess(context, message: message, title: "Message", onPressed: () {
+    var message = state.isEditBatch
+        ? "Batch updated sucessfully!!"
+        : "Batch is sucessfully created!!";
+    Alert.sucess(context, message: message, title: "Message", onPressed: () {
+      Navigator.pop(context);
+      if (state.isEditBatch) {
         Navigator.pop(context);
-        if (state.isEditBatch) {
-          Navigator.pop(context);
-        }
-      });
-      final homeState = Provider.of<HomeState>(context, listen: false);
-      homeState.getBatchList();
-    } else {
-      Alert.sucess(context,
-          message: "Some error occured. Please try again in some time!!",
-          title: "Message",
-          height: 170);
+      }
+    });
+    final homeState = Provider.of<HomeState>(context, listen: false);
+    homeState.getBatchList();
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -318,57 +309,52 @@ class _CreateBatchState extends State<CreateBatch> {
                 ),
                 Text(
                   "An SMS & whatsapp invite will be sent to the above number",
-                  style: theme.textTheme.bodyText2.copyWith(
+                  style: theme.textTheme.bodyMedium.copyWith(
                       fontSize: 12,
                       fontStyle: FontStyle.italic,
-                      color: theme.textTheme.subtitle2.color),
+                      color: theme.textTheme.titleSmall.color),
                 ).vP8,
                 SizedBox(height: 4),
                 _secondaryButton(context,
                     label: "Pick Institute Student",
                     onPressed: displayStudentsList),
-                if (student != null)
-                  ValueListenableBuilder<List<ActorModel>>(
-                      valueListenable: student,
-                      builder: (context, listenableList, chils) {
-                        return Wrap(
-                            children: listenableList
-                                .where((element) => element.isSelected)
-                                .map((e) => CircleAvatar(
-                                    radius: 15,
-                                    child: Text(
-                                      e.name.substring(0, 2).toUpperCase(),
-                                      style: theme.textTheme.caption.copyWith(
-                                          fontSize: 12,
-                                          color: theme.colorScheme.onPrimary),
-                                    )).p(5))
-                                .toList());
-                      }),
+                ValueListenableBuilder<List<ActorModel>>(
+                    valueListenable: student,
+                    builder: (context, listenableList, chils) {
+                      return Wrap(
+                          children: listenableList
+                              .where((element) => element.isSelected)
+                              .map((e) => CircleAvatar(
+                                  radius: 15,
+                                  child: Text(
+                                    e.name.substring(0, 2).toUpperCase(),
+                                    style: theme.textTheme.bodySmall.copyWith(
+                                        fontSize: 12,
+                                        color: theme.colorScheme.onPrimary),
+                                  )).p(5))
+                              .toList());
+                    }),
                 SizedBox(height: 12),
                 _secondaryButton(context,
                     label: "Select contact from device",
                     onPressed: selectFromDeviceContact),
-                if (deviceContact.value != null)
-                  ValueListenableBuilder<List<Contact>>(
-                      valueListenable: deviceContact,
-                      builder: (context, listenableList, chils) {
-                        if (listenableList == null) {
-                          return SizedBox();
-                        }
-                        return Wrap(
-                            children: listenableList
-                                .map((e) => CircleAvatar(
-                                    radius: 15,
-                                    child: Text(
-                                      e.displayName
-                                          .substring(0, 2)
-                                          .toUpperCase(),
-                                      style: theme.textTheme.caption.copyWith(
-                                          fontSize: 12,
-                                          color: theme.colorScheme.onPrimary),
-                                    )).p(5))
-                                .toList());
-                      }),
+                ValueListenableBuilder<List<Contact>>(
+                    valueListenable: deviceContact,
+                    builder: (context, listenableList, chils) {
+                      return Wrap(
+                          children: listenableList
+                              .map((e) => CircleAvatar(
+                                  radius: 15,
+                                  child: Text(
+                                    e.displayName
+                                        .substring(0, 2)
+                                        .toUpperCase(),
+                                    style: theme.textTheme.bodySmall.copyWith(
+                                        fontSize: 12,
+                                        color: theme.colorScheme.onPrimary),
+                                  )).p(5))
+                              .toList());
+                    }),
                 SizedBox(height: 10),
                 Consumer<CreateBatchStates>(builder: (context, state, child) {
                   return PFlatButton(

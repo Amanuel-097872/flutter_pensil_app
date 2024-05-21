@@ -28,9 +28,6 @@ class Images {
   static const String videoPlay = 'assets/images/icons/video_play.jpeg';
 
   static getfiletypeIcon(String type, {String path}) {
-    if (type == null && path != null) {
-      type = path.split(".").last;
-    }
     switch (type) {
       case "pdf":
         return pdf;

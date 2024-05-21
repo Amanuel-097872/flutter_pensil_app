@@ -41,14 +41,14 @@ class PTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (label != null) ...[
-          Text(label ?? "",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1
-                  .copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
-          SizedBox(height: 5),
-        ],
+        ...[
+        Text(label ?? "",
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                .copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
+        SizedBox(height: 5),
+      ],
         Container(
           height: height,
           child: TextFormField(
@@ -57,10 +57,8 @@ class PTextField extends StatelessWidget {
               print(val);
             },
             onFieldSubmitted: (val) {
-              if (onSubmit != null) {
-                onSubmit(val);
-              }
-            },
+              onSubmit(val);
+                        },
             obscureText: obscureText,
             maxLines: maxLines,
             onChanged: onChange,

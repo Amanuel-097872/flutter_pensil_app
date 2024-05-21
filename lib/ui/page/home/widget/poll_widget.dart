@@ -31,7 +31,7 @@ class PollWidget extends StatelessWidget {
             )
           : Text(
               label,
-              style: theme.textTheme.button.copyWith(
+              style: theme.textTheme.labelLarge.copyWith(
                   color: PColors.primary, fontWeight: FontWeight.bold),
             ),
     );

@@ -26,8 +26,7 @@ class BatchTimeSlotWidget extends StatelessWidget {
                 icon: SizedBox(
                     height: 50,
                     child: Stack(
-                      overflow: Overflow.clip,
-                      alignment: Alignment.center,
+                      clipBehavior: Clip.hardEdge, alignment: Alignment.center,
                       children: <Widget>[
                         Align(
                             alignment: Alignment.centerRight,
@@ -71,24 +70,20 @@ class BatchTimeSlotWidget extends StatelessWidget {
           child: _day(context, model.startTime, isStartTime: true,
               onPressed: () async {
             final time = await getTime(context);
-            if (time != null) {
-              model.startTime = time;
-              Provider.of<CreateBatchStates>(context, listen: false)
-                  .updateTimeSlots(model, indexValue);
-            }
-          }),
+            model.startTime = time;
+            Provider.of<CreateBatchStates>(context, listen: false)
+                .updateTimeSlots(model, indexValue);
+                    }),
         ),
         SizedBox(width: 5),
         Expanded(
           child: _day(context, model.endTime, isStartTime: false,
               onPressed: () async {
             final time = await getTime(context);
-            if (time != null) {
-              model.endTime = time;
-              Provider.of<CreateBatchStates>(context, listen: false)
-                  .updateTimeSlots(model, indexValue);
-            }
-          }),
+            model.endTime = time;
+            Provider.of<CreateBatchStates>(context, listen: false)
+                .updateTimeSlots(model, indexValue);
+                    }),
         ),
         SizedBox(
           height: 40,
@@ -113,8 +108,7 @@ class BatchTimeSlotWidget extends StatelessWidget {
                 SizedBox(
                   height: 50,
                   child: Stack(
-                    overflow: Overflow.clip,
-                    alignment: Alignment.center,
+                    clipBehavior: Clip.hardEdge, alignment: Alignment.center,
                     children: <Widget>[
                       Align(
                           alignment: Alignment.centerRight,

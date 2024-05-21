@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 part 'extentions.dart';
 part 'light_color.dart';
 enum ThemeType { LIGHT, DARK }
@@ -12,28 +13,24 @@ class AppTheme {
         brightness: Brightness.light,
         primaryColor: PColors.primary,
         primaryColorLight: PColors.primaryLight,
-        buttonColor:  PColors.primary,
-        backgroundColor: PColors.background,
         cardColor: PColors.cardColor,
         iconTheme: IconThemeData(color: PColors.gray),
-        colorScheme: ThemeData.dark().colorScheme.copyWith(
+        // textTheme: TextThemes.lightTextTheme,
+        appBarTheme: AppBarTheme(
+          color: PColors.appBarColor,
+          elevation: 1,
+          iconTheme: IconThemeData(
+            color: PColors.black,
+          ), systemOverlayStyle: SystemUiOverlayStyle.dark, toolbarTextStyle: TextTheme(
+            titleLarge: TextStyle(color: PColors.black, fontSize: 20),
+          ).bodyMedium, titleTextStyle: TextTheme(
+            titleLarge: TextStyle(color: PColors.black, fontSize: 20),
+          ).titleLarge,
+        ), colorScheme: ThemeData.dark().colorScheme.copyWith(
             surface: PColors.surfaceColor,
             onSurface: PColors.onSurfaceDarkColor,
             onPrimary: PColors.onPrimary,
-            onSecondary: PColors.onPrimary,
-            onBackground: PColors.onSurfaceLightColor),
-        // textTheme: TextThemes.lightTextTheme,
-        appBarTheme: AppBarTheme(
-          brightness: Brightness.light,
-          color: PColors.appBarColor,
-          elevation: 1,
-          textTheme: TextTheme(
-            headline6: TextStyle(color: PColors.black, fontSize: 20),
-          ),
-          iconTheme: IconThemeData(
-            color: PColors.black,
-          ),
-        ),
+            onSecondary: PColors.onPrimary).copyWith(surface: PColors.background),
       );
   static BoxDecoration outline(context) => BoxDecoration(
         borderRadius: BorderRadius.circular(5),
@@ -51,7 +48,7 @@ class AppTheme {
 
   static BoxDecoration outlineError(context) => BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: Theme.of(context).errorColor, width: 2),
+        border: Border.all(color: Theme.of(context).colorScheme.error, width: 2),
       );
     
   static BoxDecoration decoration(context) => BoxDecoration(

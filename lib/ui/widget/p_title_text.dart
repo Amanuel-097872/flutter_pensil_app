@@ -7,7 +7,7 @@ class PTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.headline5.copyWith(
+      style: Theme.of(context).textTheme.headlineSmall.copyWith(
             fontSize: 20,
           ),
     );
@@ -21,7 +21,7 @@ class PTitleTextBold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.headline6.copyWith(
+      style: Theme.of(context).textTheme.titleLarge.copyWith(
             fontSize: 20,
           ),
     );

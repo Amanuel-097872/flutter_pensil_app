@@ -23,23 +23,18 @@ class CreateBatchStates extends BaseState {
   BatchModel editBatch = BatchModel();
 
   setBatchToEdit(BatchModel model) {
-    if (model == null) {
-      return;
-    }
     isEditBatch = true;
     editBatch = model;
     batchName = model.name;
     description = model.description;
     var counter = 0;
-    if (model.classes != null) {
-      timeSlots = List.from(model.classes);
-      timeSlots.forEach((clas) {
-        clas.index = counter;
-        counter++;
-        clas.key = UniqueKey().toString();
-      });
-    }
-
+    timeSlots = List.from(model.classes);
+    timeSlots.forEach((clas) {
+      clas.index = counter;
+      counter++;
+      clas.key = UniqueKey().toString();
+    });
+  
     selectedSubjects = model.subject;
     selectedStudentsList = model.studentModel;
     // if (model.studentModel != null){
@@ -71,7 +66,6 @@ class CreateBatchStates extends BaseState {
   }
 
   void setTimeSlots(BatchTimeSlotModel model) {
-    if (timeSlots == null) timeSlots = List<BatchTimeSlotModel>();
     model.index = timeSlots.length;
     timeSlots.add(model);
     notifyListeners();
@@ -108,9 +102,6 @@ class CreateBatchStates extends BaseState {
   }
 
   void addContact(String mobile) {
-    if (contactList == null) {
-      contactList = [];
-    }
     contactList.add(mobile);
     notifyListeners();
   }
@@ -122,9 +113,6 @@ class CreateBatchStates extends BaseState {
 
   /// Add stuent mobile no. from available list
   set setStudentsFromList(ActorModel value) {
-    if (selectedStudentsList == null) {
-      selectedStudentsList = [];
-    }
     var model = studentsList
         .firstWhere((e) => e.name == value.name && e.mobile == value.mobile);
     model.isSelected = true;
@@ -140,23 +128,15 @@ class CreateBatchStates extends BaseState {
   }
 
   void addNewSubject(String value) {
-    if (availableSubjects == null) {
-      availableSubjects = List<Subject>()
-        ..add(Subject(index: 0, name: value, isSelected: true));
-    } else {
-      availableSubjects.add(Subject(
-          index: availableSubjects.length, name: value, isSelected: false));
-    }
-    notifyListeners();
+    availableSubjects.add(Subject(
+        index: availableSubjects.length, name: value, isSelected: false));
+      notifyListeners();
   }
 
   /// If any contact no is selcected from mobile contacts list then it should be added
   void setDeviceSelectedContacts(List<Contact> list) {
-    if (list != null)
-      deviceSelectedContacts =
-          list.map((e) => e.phones.first.value.replaceAll(" ", "")).toList();
-    else
-      deviceSelectedContacts = [];
+    deviceSelectedContacts =
+        list.map((e) => e.phones.first.value.replaceAll(" ", "")).toList();
   }
 
   bool checkSlotsVAlidations() {
@@ -235,12 +215,12 @@ class CreateBatchStates extends BaseState {
     try {
       final repo = getit.get<TeacherRepository>();
       studentsList = await repo.getStudentList();
-      if (studentsList != null && studentsList.isNotEmpty) {
+      if (studentsList.isNotEmpty) {
         studentsList.removeWhere((element) => element.mobile == null);
         studentsList.toSet().toList();
         final ids = studentsList.map((e) => e.mobile).toSet();
         studentsList.retainWhere((x) => ids.remove(x.mobile));
-        if (selectedStudentsList != null && selectedStudentsList.isNotEmpty) {
+        if (selectedStudentsList.isNotEmpty) {
           studentsList.forEach((student) {
             var isAvailable =
                 selectedStudentsList.any((element) => student.id == element.id);
@@ -262,29 +242,27 @@ class CreateBatchStates extends BaseState {
     await execute(() async {
       final repo = getit.get<TeacherRepository>();
       final list = await repo.getSubjectList();
-      if (list != null) {
-        /// Remove duplicate subjects
-        list.toSet().toList();
-        final ids = list.map((e) => e).toSet();
-        list.retainWhere((x) => ids.remove(x));
+      /// Remove duplicate subjects
+      list.toSet().toList();
+      final ids = list.map((e) => e).toSet();
+      list.retainWhere((x) => ids.remove(x));
 
-        availableSubjects = Iterable.generate(
-          list.length,
-          (index) => Subject(
-            index: index,
-            name: list[index],
-            isSelected: selectedSubjects == null
-                ? false
-                : selectedSubjects == list[index]
-                    ? true
-                    : false,
-          ),
-        ).toList();
+      availableSubjects = Iterable.generate(
+        list.length,
+        (index) => Subject(
+          index: index,
+          name: list[index],
+          isSelected: selectedSubjects == null
+              ? false
+              : selectedSubjects == list[index]
+                  ? true
+                  : false,
+        ),
+      ).toList();
 
-        if (selectedSubjects == null && availableSubjects.isNotEmpty) {
-          selectedSubjects = availableSubjects.first.name;
-        }
+      if (selectedSubjects == null && availableSubjects.isNotEmpty) {
+        selectedSubjects = availableSubjects.first.name;
       }
-    }, label: "Get Sybjects");
+        }, label: "Get Sybjects");
   }
 }

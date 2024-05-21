@@ -11,10 +11,10 @@ BatchTimelineResponse _$BatchTimelineResponseFromJson(
   return BatchTimelineResponse(
     message: json['message'] as String,
     timeline: (json['timeline'] as List)
-        ?.map((e) => e == null
+        .map((e) => e == null
             ? null
             : BatchTimeline.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+        .toList(),
   );
 }
 
@@ -46,7 +46,7 @@ _$_BatchTimeline _$_$_BatchTimelineFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_BatchTimelineToJson(_$_BatchTimeline instance) =>
     <String, dynamic>{
       'type': _$RawTypeEnumMap[instance.type],
-      'createdAt': instance.createdAt?.toIso8601String(),
+      'createdAt': instance.createdAt.toIso8601String(),
       'datum': instance.datum,
     };
 
@@ -62,7 +62,7 @@ T _$enumDecode<T>(
 
   final value = enumValues.entries
       .singleWhere((e) => e.value == source, orElse: () => null)
-      ?.key;
+      .key;
 
   if (value == null && unknownValue == null) {
     throw ArgumentError('`$source` is not one of the supported values: '

@@ -45,12 +45,12 @@ class _BatchVideosPageState extends State<BatchVideosPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text("Nothing  to see here",
-                      style: Theme.of(context).textTheme.headline6.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge.copyWith(
                             color: PColors.gray,
                           )),
                   SizedBox(height: 10),
                   Text("No video is uploaded yet for this batch!!",
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center),
                 ],
               ),

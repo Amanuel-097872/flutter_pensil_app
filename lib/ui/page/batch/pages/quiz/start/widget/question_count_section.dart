@@ -19,7 +19,7 @@ class QuestionCountSection extends StatelessWidget {
       ),
       child: Text(
         "${index + 1}",
-        style: Theme.of(context).textTheme.bodyText1.copyWith(
+        style: Theme.of(context).textTheme.bodyLarge.copyWith(
               color: model.selectedAnswer != null ? Colors.white : Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 16,

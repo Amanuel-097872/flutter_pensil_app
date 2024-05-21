@@ -149,7 +149,7 @@ class PollModel {
   }
 
   bool isMyVote(String studentId, String option) {
-    if (this.answers != null && this.answers.isNotEmpty) {
+    if (this.answers.isNotEmpty) {
       if (this.answers.any((element) =>
           element.studentId == studentId && element.option == option)) {
         return true;
@@ -159,8 +159,6 @@ class PollModel {
   }
 
   bool isVoted(String userId) {
-    assert(userId != null,
-        "User id Required to check if user has voted or not on poll");
     if (answers.isEmpty) {
       return false;
     }

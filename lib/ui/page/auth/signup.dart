@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/config/config.dart';
-import 'package:flutter_pensil_app/helper/images.dart';
 import 'package:flutter_pensil_app/helper/shared_prefrence_helper.dart';
 import 'package:flutter_pensil_app/helper/utility.dart';
 import 'package:flutter_pensil_app/states/auth/auth_state.dart';
@@ -239,10 +238,10 @@ class _SignUpState extends State<SignUp> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text("Already have an account ?",
-                              style: theme.textTheme.bodyText2
+                              style: theme.textTheme.bodyMedium
                                   .copyWith(color: Colors.white60)),
                           Text("SIGN IN",
-                                  style: theme.textTheme.bodyText2.copyWith(
+                                  style: theme.textTheme.bodyMedium.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: theme.colorScheme.onPrimary))
                               .p16

@@ -30,11 +30,10 @@ class PChip extends StatelessWidget {
       child: Wrap(
         children: <Widget>[
           Text(label, style:style),
-          if(onDeleted != null)
           ...[
-            SizedBox(width: 4,),
-            Icon(Icons.cancel, size: 17).ripple(onDeleted)
-          ]
+          SizedBox(width: 4,),
+          Icon(Icons.cancel, size: 17).ripple(onDeleted)
+        ]
         ],
       ),
     );

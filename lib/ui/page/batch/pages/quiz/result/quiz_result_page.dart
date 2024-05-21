@@ -23,7 +23,7 @@ class QuizRasultPage extends StatelessWidget {
         children: [
           Image.asset(img, height: 20),
           Text(title).vP8,
-          Text(subtitle, style: Theme.of(context).textTheme.headline6),
+          Text(subtitle, style: Theme.of(context).textTheme.titleLarge),
         ],
       ),
     );
@@ -33,7 +33,7 @@ class QuizRasultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = model.questions.length;
     final correct = model.questions.where((e) => e.answer == e.selectedAnswer).length;
-    final wrong = model.questions.where((e) => e.selectedAnswer != null && e.answer != e.selectedAnswer).length;
+    final wrong = model.questions.where((e) => e.answer != e.selectedAnswer).length;
     final skipped = model.questions.where((e) => e.selectedAnswer == null).length;
 
     final percent = correct * 100 / total;
@@ -41,7 +41,7 @@ class QuizRasultPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xffF7506A),
         leading: SizedBox(),
-        title: Text("Result", style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white)),
+        title: Text("Result", style: Theme.of(context).textTheme.titleLarge.copyWith(color: Colors.white)),
         centerTitle: true,
       ),
       body: Container(
@@ -60,8 +60,8 @@ class QuizRasultPage extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text("Score", style: Theme.of(context).textTheme.headline6).vP8,
-                      Text("$percent %", style: Theme.of(context).textTheme.headline5),
+                      Text("Score", style: Theme.of(context).textTheme.titleLarge).vP8,
+                      Text("$percent %", style: Theme.of(context).textTheme.headlineSmall),
                     ],
                   )
                 ],
@@ -91,7 +91,7 @@ class QuizRasultPage extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   "View Solution",
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
+                  style: Theme.of(context).textTheme.bodyLarge.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
                 ),
               ).ripple(() {
                 Navigator.push(context, QuizSolutionPage.getRoute(model));

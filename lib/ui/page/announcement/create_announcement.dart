@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/helper/images.dart';
 import 'package:flutter_pensil_app/model/batch_model.dart';
@@ -48,7 +47,7 @@ class CreateAnnouncement extends StatefulWidget {
         create: (context) => AnnouncementState(
           announcementModel: announcementModel,
           isEditMode: true,
-          batchId: batch?.id,
+          batchId: batch.id,
         ),
         child: CreateAnnouncement(
           selectedBatch: batch,
@@ -77,7 +76,7 @@ class _CreateBatchState extends State<CreateAnnouncement> {
     _description =
         TextEditingController(text: state.announcementModel.description ?? "");
     _title = TextEditingController(text: state.announcementModel.title ?? "");
-    if (widget.selectedBatch != null) batchList.value = [widget.selectedBatch];
+    batchList.value = [widget.selectedBatch];
     super.initState();
   }
 
@@ -95,7 +94,7 @@ class _CreateBatchState extends State<CreateAnnouncement> {
     return Text(name,
         style: Theme.of(context)
             .textTheme
-            .bodyText1
+            .bodyLarge
             .copyWith(fontWeight: FontWeight.bold, fontSize: 16));
   }
 
@@ -107,14 +106,14 @@ class _CreateBatchState extends State<CreateAnnouncement> {
         icon: Icon(Icons.add_circle, color: PColors.primary, size: 17),
         label: Text(
           label,
-          style: theme.textTheme.button
+          style: theme.textTheme.labelLarge
               .copyWith(color: PColors.primary, fontWeight: FontWeight.bold),
         ));
   }
 
   void displayBatchList() async {
     final list = Provider.of<HomeState>(context, listen: false).batchList;
-    if (!(list != null && list.isNotEmpty)) {
+    if (!(list.isNotEmpty)) {
       return;
     }
     print(list.length);
@@ -128,24 +127,20 @@ class _CreateBatchState extends State<CreateAnnouncement> {
     FilePickerResult result = await FilePicker.platform.pickFiles(
       type: FileType.image,
     );
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      final state = Provider.of<AnnouncementState>(context, listen: false);
-      state.setImageForAnnouncement = File(file.path);
+    PlatformFile file = result.files.first;
+    final state = Provider.of<AnnouncementState>(context, listen: false);
+    state.setImageForAnnouncement = File(file.path);
     }
-  }
 
   void pickFile() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc', 'xlsx', 'xls'],
     );
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      final state = Provider.of<AnnouncementState>(context, listen: false);
-      state.setDocForAnnouncement = File(file.path);
+    PlatformFile file = result.files.first;
+    final state = Provider.of<AnnouncementState>(context, listen: false);
+    state.setDocForAnnouncement = File(file.path);
     }
-  }
 
   void createAnnouncement() async {
     final state = context.read<AnnouncementState>();
@@ -162,33 +157,23 @@ class _CreateBatchState extends State<CreateAnnouncement> {
         description: _description.text,
         batches: batchList.value);
     isLoading.value = false;
-    if (addNewAnnouncment != null) {
-      Alert.sucess(
-        context,
-        message: state.isEditMode
-            ? "Announcement updated sucessfully!!"
-            : "Announcement created sucessfully!!",
-        title: "Message",
-        onPressed: () {
-          if (widget.onAnnouncementCreated != null) {
-            /// Refresh announcement on batch detail screen
-            widget.onAnnouncementCreated();
-          }
-
-          /// Refresh announcement on home screen
-          final homeState = context.read<HomeState>();
-          homeState.getAnnouncemantList();
-          Navigator.pop(context);
-        },
-      );
-    } else {
-      Alert.sucess(context,
-          message: "Some error occured. Please try again in some time!!",
-          title: "Message",
-          height: 170,
-          onPressed: () {});
+    Alert.sucess(
+      context,
+      message: state.isEditMode
+          ? "Announcement updated sucessfully!!"
+          : "Announcement created sucessfully!!",
+      title: "Message",
+      onPressed: () {
+        /// Refresh announcement on batch detail screen
+        widget.onAnnouncementCreated();
+      
+        /// Refresh announcement on home screen
+        final homeState = context.read<HomeState>();
+        homeState.getAnnouncemantList();
+        Navigator.pop(context);
+      },
+    );
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -233,18 +218,17 @@ class _CreateBatchState extends State<CreateAnnouncement> {
                           label: "Pick Batch", onPressed: displayBatchList),
                   ],
                 ),
-                if (batchList != null)
-                  ValueListenableBuilder<List<BatchModel>>(
-                      valueListenable: batchList,
-                      builder: (context, listenableList, chils) {
-                        return Wrap(
-                            children: listenableList
-                                .where((element) => element.isSelected)
-                                .map((e) => Padding(
-                                    padding: EdgeInsets.only(right: 4, top: 4),
-                                    child: PChip(label: e.name)))
-                                .toList());
-                      }),
+                ValueListenableBuilder<List<BatchModel>>(
+                    valueListenable: batchList,
+                    builder: (context, listenableList, chils) {
+                      return Wrap(
+                          children: listenableList
+                              .where((element) => element.isSelected)
+                              .map((e) => Padding(
+                                  padding: EdgeInsets.only(right: 4, top: 4),
+                                  child: PChip(label: e.name)))
+                              .toList());
+                    }),
                 SizedBox(height: 10),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -265,39 +249,38 @@ class _CreateBatchState extends State<CreateAnnouncement> {
 
                 Consumer<AnnouncementState>(
                   builder: (context, state, child) {
-                    if (state.imagefile != null)
-                      return Stack(
-                        children: [
-                          Container(
-                            width: AppTheme.fullWidth(context) - 32,
-                            height: 230,
-                            margin: EdgeInsets.symmetric(vertical: 16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: FileImage(state.imagefile),
-                                fit: BoxFit.cover,
-                              ),
+                    return Stack(
+                      children: [
+                        Container(
+                          width: AppTheme.fullWidth(context) - 32,
+                          height: 230,
+                          margin: EdgeInsets.symmetric(vertical: 16),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              image: FileImage(state.imagefile),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          Positioned(
-                            top: 15,
-                            right: 0,
-                            child: Container(
-                              color: Theme.of(context).disabledColor,
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.cancel_outlined,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary),
-                              ).ripple(() {
-                                state.removeAnnouncementImage();
-                              }),
-                            ).circular,
-                          )
-                        ],
-                      );
+                        ),
+                        Positioned(
+                          top: 15,
+                          right: 0,
+                          child: Container(
+                            color: Theme.of(context).disabledColor,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.cancel_outlined,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimary),
+                            ).ripple(() {
+                              state.removeAnnouncementImage();
+                            }),
+                          ).circular,
+                        )
+                      ],
+                    );
                     return Column(
                       children: [
                         Container(
@@ -310,13 +293,13 @@ class _CreateBatchState extends State<CreateAnnouncement> {
                               Text("Browse Image",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2
+                                      .bodyMedium
                                       .copyWith(fontWeight: FontWeight.bold)),
                               Image.asset(Images.uploadVideo, height: 25).vP16,
                               Text("Image format should be png, jpeg, and jpg",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2
+                                      .bodyMedium
                                       .copyWith(
                                           fontSize: 12, color: PColors.gray)),
                             ],
@@ -331,7 +314,7 @@ class _CreateBatchState extends State<CreateAnnouncement> {
                 Text("---------- OR ----------",
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2
+                            .bodyMedium
                             .copyWith(fontSize: 12, color: PColors.gray))
                     .alignCenter,
                 SizedBox(height: 10),
@@ -344,56 +327,54 @@ class _CreateBatchState extends State<CreateAnnouncement> {
                       Text("Browse file",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2
+                              .bodyMedium
                               .copyWith(fontWeight: FontWeight.bold)),
                       Image.asset(Images.uploadVideo, height: 25).vP16,
                       Text("File should be PDF, DOCX, Sheet, Image",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2
+                              .bodyMedium
                               .copyWith(fontSize: 12, color: PColors.gray))
                     ],
                   ),
                 ).ripple(pickFile),
                 Consumer<AnnouncementState>(
                   builder: (context, state, child) {
-                    if (state.docfile != null) {
-                      return SizedBox(
-                        height: 65,
-                        width: AppTheme.fullWidth(context),
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                SizedBox(
-                                    width: 50,
-                                    child: Image.asset(
-                                      Images.getfiletypeIcon(
-                                          state.docfile.path.split(".").last),
-                                      height: 30,
-                                    )),
-                                Text(state.docfile.path.split("/").last)
-                                    .extended,
-                                // Spacer(),
-                                IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.cancel),
-                                    onPressed: state.removeAnnouncementDoc)
-                              ],
-                            ),
-                            Container(
-                              height: 5,
-                              margin: EdgeInsets.symmetric(horizontal: 16),
-                              width: AppTheme.fullWidth(context),
-                              decoration: BoxDecoration(
-                                  color: Color(0xff0CC476),
-                                  borderRadius: BorderRadius.circular(20)),
-                            )
-                          ],
-                        ),
-                      ).vP8;
-                    }
-                    return SizedBox();
+                    return SizedBox(
+                      height: 65,
+                      width: AppTheme.fullWidth(context),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                  width: 50,
+                                  child: Image.asset(
+                                    Images.getfiletypeIcon(
+                                        state.docfile.path.split(".").last),
+                                    height: 30,
+                                  )),
+                              Text(state.docfile.path.split("/").last)
+                                  .extended,
+                              // Spacer(),
+                              IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.cancel),
+                                  onPressed: state.removeAnnouncementDoc)
+                            ],
+                          ),
+                          Container(
+                            height: 5,
+                            margin: EdgeInsets.symmetric(horizontal: 16),
+                            width: AppTheme.fullWidth(context),
+                            decoration: BoxDecoration(
+                                color: Color(0xff0CC476),
+                                borderRadius: BorderRadius.circular(20)),
+                          )
+                        ],
+                      ),
+                    ).vP8;
+                                      return SizedBox();
                   },
                 ),
                 SizedBox(height: 40),

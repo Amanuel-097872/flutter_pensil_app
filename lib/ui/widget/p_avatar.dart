@@ -27,7 +27,7 @@ class UsernameWidget extends StatefulWidget {
 class _UsernameWidgetState extends State<UsernameWidget> {
   String getName() {
     var name = widget.name;
-    if (name == null || name.isEmpty) {
+    if (name.isEmpty) {
       return '';
     } else {
       var splitname = name.split(' ').toList();
@@ -83,16 +83,14 @@ class _UsernameWidgetState extends State<UsernameWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.fileImage != null) {
-      // print("Emoty file");
-    }
-    // print("Image Url from API:- ${widget.avatarUrl}");
+    // print("Emoty file");
+      // print("Image Url from API:- ${widget.avatarUrl}");
     return Container(
       child: AspectRatio(
         aspectRatio: 1,
         child: widget.fileImage != null
             ? _getImageFromFile()
-            : widget.avatarUrl == null || widget.avatarUrl.isEmpty
+            : widget.avatarUrl.isEmpty
                 ? _getNameImage()
                 : _getProfilePic(),
       ),

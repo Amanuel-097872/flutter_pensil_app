@@ -11,13 +11,8 @@ class CustomLoader {
   CustomLoader._createObject();
 
   factory CustomLoader() {
-    if (_customLoader != null) {
-      return _customLoader;
-    } else {
-      _customLoader = CustomLoader._createObject();
-      return _customLoader;
+    return _customLoader;
     }
-  }
 
   //static OverlayEntry _overlayEntry;
   OverlayState _overlayState; //= new OverlayState();
@@ -42,7 +37,7 @@ class CustomLoader {
 
   hideLoader() {
     try {
-      _overlayEntry?.remove();
+      _overlayEntry.remove();
       _overlayEntry = null;
     } catch (e) {
       print("Exception:: $e");
@@ -50,9 +45,6 @@ class CustomLoader {
   }
 
   buildLoader(BuildContext context, {Color backgroundColor}) {
-    if (backgroundColor == null) {
-      backgroundColor = const Color(0xffa8a8a8).withOpacity(.5);
-    }
     var height = 140.0;
     return CustomScreenLoader(
       height: height,

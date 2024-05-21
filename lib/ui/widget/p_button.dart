@@ -29,7 +29,7 @@ class PFlatButton extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
             color: !isColored ? null : color ?? Theme.of(context).primaryColor,
-            splashColor: Theme.of(context).colorScheme.background,
+            splashColor: Theme.of(context).colorScheme.surface,
             textColor: Theme.of(context).colorScheme.onPrimary,
             onPressed: loading ? null : onPressed,
             child: loading
@@ -48,7 +48,7 @@ class PFlatButton extends StatelessWidget {
         },
         child: Text(
           label,
-          style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)
+          style: Theme.of(context).textTheme.labelLarge.copyWith(color: Colors.white)
         ),
       ),
     );

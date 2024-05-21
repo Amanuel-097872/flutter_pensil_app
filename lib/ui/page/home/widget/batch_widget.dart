@@ -28,17 +28,16 @@ class BatchWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
-                  .headline6
+                  .titleLarge
                   .copyWith(fontSize: 15, fontWeight: FontWeight.bold)),
           SizedBox(height: 10),
-          if (model.subject != null)
-            PChip(
-              label: model.subject,
-              backgroundColor: Color(0xffF67619),
-              borderColor: Colors.transparent,
-              style: theme.textTheme.bodyText1
-                  .copyWith(fontSize: 14, color: theme.colorScheme.onSecondary),
-            ),
+          PChip(
+            label: model.subject,
+            backgroundColor: Color(0xffF67619),
+            borderColor: Colors.transparent,
+            style: theme.textTheme.bodyLarge
+                .copyWith(fontSize: 14, color: theme.colorScheme.onSecondary),
+          ),
           SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

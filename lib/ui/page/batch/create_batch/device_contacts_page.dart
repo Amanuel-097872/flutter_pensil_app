@@ -1,7 +1,5 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_pensil_app/model/actor_model.dart';
 import 'package:flutter_pensil_app/ui/widget/form/p_textfield.dart';
 import 'package:flutter_pensil_app/ui/widget/p_button.dart';
 import 'package:get_it/get_it.dart';
@@ -91,11 +89,11 @@ class _AllContactsPageState extends State<AllContactsPage> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: _contacts?.length ?? 0,
+                      itemCount: _contacts.length ?? 0,
                       itemBuilder: (BuildContext context, int index) {
                         final List<String> _contactsList = [];
 
-                        final Contact _contact = _contacts?.elementAt(index);
+                        final Contact _contact = _contacts.elementAt(index);
                         if (_contact.phones.isNotEmpty) {
                           _contact.phones
                               .map((i) => _contactsList.add(i.value ?? 'Null'))
@@ -141,17 +139,17 @@ class _AllContactsPageState extends State<AllContactsPage> {
                                   _contact.displayName ?? "",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       .copyWith(
                                           color: isSelected
                                               ? Colors.white
                                               : Colors.black),
                                 ),
                                 subtitle: Text(
-                                  _contact?.phones?.first?.value ?? "N/A",
+                                  _contact.phones?.first.value ?? "N/A",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       .copyWith(
                                           color: isSelected
                                               ? Colors.white
@@ -178,7 +176,7 @@ class _AllContactsPageState extends State<AllContactsPage> {
               withThumbnails: false, orderByGivenName: true))
           .toList();
 
-      if (contacts != null && contacts.isNotEmpty) {
+      if (contacts.isNotEmpty) {
         /// Remove contacts having null contact or Display name
         contacts.removeWhere(
             (element) => element.phones.isEmpty || element.displayName == null);
@@ -196,7 +194,6 @@ class _AllContactsPageState extends State<AllContactsPage> {
 
         /// Mark preselected contacts
         if (initial &&
-            selectedFromDeviceContact != null &&
             selectedFromDeviceContact.isNotEmpty) {
           _selectedContacts.clear();
           contacts.forEach((contact) {

@@ -9,14 +9,13 @@ class Config {
   final bool diagnostic;
 
   Config({
-    @required this.appName,
-    @required this.apiBaseUrl,
-    @required this.appToken,
-    @required this.appIcon,
+    required this.appName,
+    required this.apiBaseUrl,
+    required this.appToken,
+    required this.appIcon,
     this.apiLogging = false,
     this.diagnostic = false,
-  })  : assert(appName != null),
-        assert(apiBaseUrl != null);
+  });
 
   Config copyWith(
       {appName, apiBaseUrl, apiLogging, diagnostic, appToken, appIcon}) {
@@ -35,10 +34,9 @@ class AppConfig extends InheritedWidget {
   final Config config;
 
   AppConfig({
-    @required this.config,
-    @required Widget child,
-  })  : assert(config != null),
-        super(child: child);
+    required this.config,
+    required Widget child,
+  }) : super(child: child);
 
   static AppConfig of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<AppConfig>();

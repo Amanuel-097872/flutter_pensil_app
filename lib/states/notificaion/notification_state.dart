@@ -14,7 +14,7 @@ class NotificationState extends ChangeNotifier{
       final getit = GetIt.instance;
       final repo = getit.get<BatchRepository>();
       notifications = await repo.getStudentNotificationsList();
-      if(notifications != null && notifications.isNotEmpty){
+      if(notifications.isNotEmpty){
         notifications.sort((a,b) => b.createdAt.compareTo(a.createdAt));
       }
     }catch (error, strackTrace){

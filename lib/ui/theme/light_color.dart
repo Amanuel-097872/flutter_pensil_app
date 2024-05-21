@@ -43,10 +43,8 @@ class PColors {
       Color(0xffF14CD7),
       Color(0xffFF5757),
     ];
-    if(text != null){
-      return colors[text.length %11];
-    }
-    Random ran = Random.secure();
+    return colors[text.length %11];
+      Random ran = Random.secure();
     return colors[ran.nextInt(10)];
   }
 }

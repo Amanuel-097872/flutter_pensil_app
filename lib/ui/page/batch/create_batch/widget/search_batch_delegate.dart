@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pensil_app/model/actor_model.dart';
 import 'package:flutter_pensil_app/model/batch_model.dart';
 import 'package:flutter_pensil_app/states/home_state.dart';
-import 'package:flutter_pensil_app/states/teacher/create_batch_state.dart';
 
 class BatchSearch extends SearchDelegate<BatchModel> {
   final List<BatchModel> list;

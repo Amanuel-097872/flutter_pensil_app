@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/config/config.dart';
-import 'package:flutter_pensil_app/helper/images.dart';
 import 'package:flutter_pensil_app/helper/shared_prefrence_helper.dart';
 import 'package:flutter_pensil_app/helper/utility.dart';
 import 'package:flutter_pensil_app/states/auth/auth_state.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_pensil_app/ui/kit/alert.dart';
 import 'package:flutter_pensil_app/ui/kit/overlay_loader.dart';
 import 'package:flutter_pensil_app/ui/page/auth/forgot_password.dart';
 import 'package:flutter_pensil_app/ui/page/auth/signup.dart';
-import 'package:flutter_pensil_app/ui/page/auth/verify_Otp.dart';
 import 'package:flutter_pensil_app/ui/page/home/home_page_student.dart';
 import 'package:flutter_pensil_app/ui/page/home/home_page_teacher.dart';
 import 'package:flutter_pensil_app/ui/theme/theme.dart';
@@ -180,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.centerRight,
                     child: Text(
                       value ? "Use Phone Number" : "Use Email Id",
-                      style: theme.textTheme.button
+                      style: theme.textTheme.labelLarge
                           .copyWith(color: PColors.secondary, fontSize: 12),
                     ).p(8).ripple(() {
                       useMobile.value = !useMobile.value;
@@ -214,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
             Align(
               alignment: Alignment.centerRight,
               child: Text("Forgot password?",
-                      style: theme.textTheme.button
+                      style: theme.textTheme.labelLarge
                           .copyWith(color: PColors.secondary, fontSize: 12))
                   .p16
                   .ripple(() {
@@ -319,11 +317,11 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text("Don't have an account ?",
-                              style: theme.textTheme.bodyText2
+                              style: theme.textTheme.bodyMedium
                                   .copyWith(color: Colors.grey)),
                           // SizedBox(width: 10),
                           Text("SIGN UP",
-                                  style: theme.textTheme.bodyText2
+                                  style: theme.textTheme.bodyMedium
                                       .copyWith(fontWeight: FontWeight.bold))
                               .p16
                               .ripple(() {

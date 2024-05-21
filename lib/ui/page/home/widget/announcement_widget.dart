@@ -8,7 +8,6 @@ import 'package:flutter_pensil_app/ui/kit/alert.dart';
 import 'package:flutter_pensil_app/ui/kit/overlay_loader.dart';
 import 'package:flutter_pensil_app/ui/page/batch/widget/tile_action_widget.dart';
 import 'package:flutter_pensil_app/ui/theme/theme.dart';
-import 'package:flutter_pensil_app/ui/widget/image_viewer.dart';
 import 'package:flutter_pensil_app/ui/widget/url_Text.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +36,7 @@ class AnnouncementWidget extends StatelessWidget {
           .deleteAnnouncement(id);
       if (isDeleted) {
         Utility.displaySnackbar(context, msg: "Annoucement Deleted");
-        if (onAnnouncementDeleted != null) await onAnnouncementDeleted(model);
+        await onAnnouncementDeleted(model);
       }
       loader.hideLoader();
     });
@@ -82,51 +81,47 @@ class AnnouncementWidget extends StatelessWidget {
                         children: <Widget>[
                           UrlText(text: model.description),
                           SizedBox(height: 8),
-                          if (model.image != null &&
-                              model.image.isNotEmpty) ...[
+                          if (model.image.isNotEmpty) ...[
                             CachedNetworkImage(
                                 imageUrl: model.image, height: 120),
                             SizedBox(height: 8),
                           ],
-                          if (model.file != null)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Image.asset(
-                                    Images.getfiletypeIcon(null,
-                                        path: model.file),
-                                    height: 20),
-                                SizedBox(width: 8),
-                                RotatedBox(
-                                  quarterTurns: 1,
-                                  child: Icon(Icons.attach_file_outlined),
-                                )
-                              ],
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Image.asset(
+                                  Images.getfiletypeIcon(null,
+                                      path: model.file),
+                                  height: 20),
+                              SizedBox(width: 8),
+                              RotatedBox(
+                                quarterTurns: 1,
+                                child: Icon(Icons.attach_file_outlined),
+                              )
+                            ],
+                          ),
                           Align(
                             alignment: Alignment.bottomRight,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                if (model.owner != null &&
-                                    model.owner.name != null)
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                      "by ${model.owner.name} ~ ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1
-                                          .copyWith(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500),
-                                    ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    "by ${model.owner.name} ~ ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        .copyWith(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
                                   ),
+                                ),
                                 Text(
                                   Utility.toTimeOfDate(model.createdAt),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle1
+                                      .titleMedium
                                       .copyWith(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500),
@@ -142,12 +137,8 @@ class AnnouncementWidget extends StatelessWidget {
               ),
             ],
           ).ripple(() {
-            if (model.file != null) {
-              Utility.launchOnWeb(model.file);
-            } else if (model.image != null) {
-              Navigator.push(context, ImageViewer.getRoute(model.image));
-            }
-          }),
+            Utility.launchOnWeb(model.file);
+                    }),
           if (isTeacher)
             Positioned(
               top: 0,

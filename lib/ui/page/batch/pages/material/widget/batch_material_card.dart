@@ -9,7 +9,6 @@ import 'package:flutter_pensil_app/ui/kit/alert.dart';
 import 'package:flutter_pensil_app/ui/kit/overlay_loader.dart';
 import 'package:flutter_pensil_app/ui/page/batch/pages/material/upload_material.dart';
 import 'package:flutter_pensil_app/ui/page/batch/widget/tile_action_widget.dart';
-import 'package:flutter_pensil_app/ui/page/common/pdf_view.dart';
 import 'package:flutter_pensil_app/ui/theme/theme.dart';
 import 'package:flutter_pensil_app/ui/widget/p_chiip.dart';
 import 'package:provider/provider.dart';
@@ -26,10 +25,6 @@ class BatchMaterialCard extends StatelessWidget {
   final BatchMaterialModel model;
 
   Widget _picture(context, String type) {
-    if (type == null && model.articleUrl != null) {
-      type = "link";
-    }
-    // return empty widget if space has no pictures
     return // Picture
         Container(
       width: double.infinity,
@@ -71,16 +66,9 @@ class BatchMaterialCard extends StatelessWidget {
 
   void openMaterial(context, BatchMaterialModel model) {
     if (model.file != null || model.articleUrl != null) {
-      if (model.articleUrl != null) {
-        // Utility.launchURL(context, model.articleUrl ?? model.file);
-        Utility.launchOnWeb(model.articleUrl ?? model.file);
-      } else if (model.file.contains("pdf")) {
-        Navigator.push(
-            context, PdfViewPage.getRoute(model.file, title: model.title));
-      } else {
-        Utility.launchOnWeb(model.file);
-      }
-    }
+      // Utility.launchURL(context, model.articleUrl ?? model.file);
+      Utility.launchOnWeb(model.articleUrl ?? model.file);
+        }
   }
 
   void deleteVideo(BuildContext context, String id) async {
@@ -138,7 +126,7 @@ class BatchMaterialCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           model.title,
-                          style: Theme.of(context).textTheme.subtitle2,
+                          style: Theme.of(context).textTheme.titleSmall,
                           maxLines: 3,
                         ),
                         // Text(model.description,style: Theme.of(context).textTheme.bodyText2,maxLines: 2, ),
@@ -150,7 +138,7 @@ class BatchMaterialCard extends StatelessWidget {
                               backgroundColor: PColors.orange,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2
+                                  .bodyMedium
                                   .copyWith(
                                     color:
                                         Theme.of(context).colorScheme.onPrimary,
@@ -164,7 +152,7 @@ class BatchMaterialCard extends StatelessWidget {
                               Utility.toDMformate(model.createdAt),
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2
+                                  .bodyMedium
                                   .copyWith(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,

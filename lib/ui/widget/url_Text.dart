@@ -72,8 +72,7 @@ class _LinkTextSpan extends TextSpan {
             text: text,
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                if (onHashTagPressed != null &&
-                    (text.substring(0, 1).contains("#") ||
+                if ((text.substring(0, 1).contains("#") ||
                         text.substring(0, 1).contains("#"))) {
                   onHashTagPressed(text);
                 } else {

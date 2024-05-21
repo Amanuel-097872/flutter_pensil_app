@@ -7,9 +7,7 @@ import 'package:flutter_pensil_app/helper/utility.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_pensil_app/helper/images.dart';
-import 'package:flutter_pensil_app/model/batch_model.dart';
 import 'package:flutter_pensil_app/model/video_model.dart';
-import 'package:flutter_pensil_app/states/teacher/announcement_state.dart';
 import 'package:flutter_pensil_app/states/teacher/video/video_state.dart';
 import 'package:flutter_pensil_app/ui/kit/alert.dart';
 import 'package:flutter_pensil_app/ui/page/batch/pages/video/video_preview.dart';
@@ -72,8 +70,8 @@ class _AddVideoPageState extends State<AddVideoPage> {
   @override
   void initState() {
     _description =
-        TextEditingController(text: widget.videoModel?.description ?? "");
-    _title = TextEditingController(text: widget.videoModel?.title ?? "");
+        TextEditingController(text: widget.videoModel.description ?? "");
+    _title = TextEditingController(text: widget.videoModel.title ?? "");
     // batchList.value = Provider.of<HomeState>(context).batchList;
     super.initState();
   }
@@ -89,7 +87,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
     return Text(name,
         style: Theme.of(context)
             .textTheme
-            .bodyText1
+            .bodyLarge
             .copyWith(fontWeight: FontWeight.bold, fontSize: 16));
   }
 
@@ -101,7 +99,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
         icon: Icon(Icons.add_circle, color: PColors.primary, size: 17),
         label: Text(
           label,
-          style: theme.textTheme.button
+          style: theme.textTheme.labelLarge
               .copyWith(color: PColors.primary, fontWeight: FontWeight.bold),
         ));
   }
@@ -125,12 +123,10 @@ class _AddVideoPageState extends State<AddVideoPage> {
       type: FileType.custom,
       allowedExtensions: ['mp4', 'avi', "flv", "mkv", "mov"],
     );
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      final state = Provider.of<VideoState>(context, listen: false);
-      state.setFile = File(file.path);
+    PlatformFile file = result.files.first;
+    final state = Provider.of<VideoState>(context, listen: false);
+    state.setFile = File(file.path);
     }
-  }
 
   void saveVideo() async {
     final state = context.read<VideoState>();
@@ -149,7 +145,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
 
     final isOk = await state.addVideo(_title.text, _description.text);
     isLoading.value = false;
-    if (isOk != null && isOk) {
+    if (isOk) {
       String message = "Video added sucessfully!!";
       if (state.isEditMode) {
         message = "Video updated sucessfully!!";
@@ -246,70 +242,67 @@ class _AddVideoPageState extends State<AddVideoPage> {
                         Text("Browse file",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2
+                                .bodyMedium
                                 .copyWith(fontWeight: FontWeight.bold)),
                         Image.asset(Images.uploadVideo, height: 25).vP16,
                         Text("File should be mp4,mov,avi",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2
+                                .bodyMedium
                                 .copyWith(fontSize: 12, color: PColors.gray)),
                       ],
                     ),
                   ).ripple(pickFile),
                   Consumer<VideoState>(
                     builder: (context, state, child) {
-                      if (state.file != null) {
-                        return SizedBox(
-                          height: 65,
-                          width: AppTheme.fullWidth(context),
-                          child: Column(
-                            children: <Widget>[
-                              SizedBox(height: 10),
-                              Row(children: <Widget>[
-                                SizedBox(
-                                    width: 50,
-                                    child: Image.asset(
-                                      Images.getfiletypeIcon(
-                                          state.file.path.split(".").last),
-                                      height: 30,
-                                    )),
-                                Text(
-                                  state.file.path.split("/").last,
-                                  maxLines: 2,
-                                ).extended,
-                                IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.cancel),
-                                    onPressed: () {
-                                      state.removeFile();
-                                    })
-                              ]),
-                              Container(
-                                height: 5,
-                                margin: EdgeInsets.symmetric(horizontal: 16),
-                                width: AppTheme.fullWidth(context),
-                                decoration: BoxDecoration(
-                                    color: Color(0xff0CC476),
-                                    borderRadius: BorderRadius.circular(20)),
-                              )
-                            ],
-                          ),
-                        ).vP8;
-                      }
-                      return SizedBox();
+                      return SizedBox(
+                        height: 65,
+                        width: AppTheme.fullWidth(context),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: 10),
+                            Row(children: <Widget>[
+                              SizedBox(
+                                  width: 50,
+                                  child: Image.asset(
+                                    Images.getfiletypeIcon(
+                                        state.file.path.split(".").last),
+                                    height: 30,
+                                  )),
+                              Text(
+                                state.file.path.split("/").last,
+                                maxLines: 2,
+                              ).extended,
+                              IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.cancel),
+                                  onPressed: () {
+                                    state.removeFile();
+                                  })
+                            ]),
+                            Container(
+                              height: 5,
+                              margin: EdgeInsets.symmetric(horizontal: 16),
+                              width: AppTheme.fullWidth(context),
+                              decoration: BoxDecoration(
+                                  color: Color(0xff0CC476),
+                                  borderRadius: BorderRadius.circular(20)),
+                            )
+                          ],
+                        ),
+                      ).vP8;
+                                          return SizedBox();
                     },
                   ),
                   SizedBox(height: 20),
                   Consumer<VideoState>(
                     builder: (context, state, child) {
-                      if (state.thumbnailUrl != null)
-                        return SizedBox(
-                            height: 284,
-                            child: ThumbnailPreview(
-                              title: state.yTitle,
-                              url: state.thumbnailUrl,
-                            ));
+                      return SizedBox(
+                          height: 284,
+                          child: ThumbnailPreview(
+                            title: state.yTitle,
+                            url: state.thumbnailUrl,
+                          ));
                       return SizedBox();
                     },
                   ),

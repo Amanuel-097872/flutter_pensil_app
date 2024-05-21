@@ -25,7 +25,7 @@ class BatchStudyMaterialPage extends StatelessWidget {
           if (state.isBusy) {
             return Ploader();
           }
-          if (!(state.list != null && state.list.isNotEmpty)) {
+          if (!(state.list.isNotEmpty)) {
             return Center(
               child: Container(
                 height: 100,
@@ -37,12 +37,12 @@ class BatchStudyMaterialPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text("Nothing  to see here",
-                        style: Theme.of(context).textTheme.headline6.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge.copyWith(
                               color: PColors.gray,
                             )),
                     SizedBox(height: 10),
                     Text("No study material uploaded yet for this batch!!",
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyLarge,
                         textAlign: TextAlign.center),
                   ],
                 ),

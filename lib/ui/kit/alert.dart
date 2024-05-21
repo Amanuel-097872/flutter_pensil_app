@@ -32,12 +32,12 @@ class Alert {
               Text(title,
                   style: Theme.of(context)
                       .textTheme
-                      .headline6
+                      .titleLarge
                       .copyWith(fontWeight: FontWeight.bold, fontSize: 20)),
               SizedBox(height: 16),
               Text(
                 message,
-                style: Theme.of(context).typography.dense.bodyText2.copyWith(
+                style: Theme.of(context).typography.dense.bodyMedium.copyWith(
                       color: Colors.black,
                     ),
                 textAlign: TextAlign.center,
@@ -46,13 +46,11 @@ class Alert {
               FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  if (onPressed != null) {
-                    onPressed();
-                  }
-                },
+                  onPressed();
+                                },
                 color: Theme.of(context).primaryColor,
                 child: Text("OK",
-                    style: theme.textTheme.button
+                    style: theme.textTheme.labelLarge
                         .copyWith(color: theme.colorScheme.onPrimary)),
               )
             ],
@@ -89,11 +87,11 @@ class Alert {
                   style: Theme.of(context)
                       .typography
                       .dense
-                      .headline6
+                      .titleLarge
                       .copyWith(color: Colors.black)),
               SizedBox(height: 12),
               Text(message,
-                  style: Theme.of(context).typography.dense.bodyText2.copyWith(
+                  style: Theme.of(context).typography.dense.bodyMedium.copyWith(
                       color: Colors.black, fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center),
               SizedBox(height: 16),
@@ -111,10 +109,8 @@ class Alert {
                   RaisedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      if (onYes != null) {
-                        onYes();
-                      }
-                    },
+                      onYes();
+                                        },
                     child: Text("Confirm", textAlign: TextAlign.center),
                     elevation: 1,
                     color: Theme.of(context).primaryColor,
@@ -179,7 +175,7 @@ class Alert {
                                 title,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline5
+                                    .headlineSmall
                                     .copyWith(
                                         color: theme.colorScheme.onPrimary),
                                 // maxLines: 1,

@@ -66,9 +66,9 @@ class _UploadMaterialPageState extends State<UploadMaterialPage> {
   @override
   void initState() {
     _description =
-        TextEditingController(text: widget.materialModel?.description ?? "");
-    _title = TextEditingController(text: widget.materialModel?.title ?? "");
-    _link = TextEditingController(text: widget.materialModel?.articleUrl ?? "");
+        TextEditingController(text: widget.materialModel.description ?? "");
+    _title = TextEditingController(text: widget.materialModel.title ?? "");
+    _link = TextEditingController(text: widget.materialModel.articleUrl ?? "");
     // batchList.value = Provider.of<HomeState>(context).batchList;
     super.initState();
   }
@@ -85,7 +85,7 @@ class _UploadMaterialPageState extends State<UploadMaterialPage> {
     return Text(name,
         style: Theme.of(context)
             .textTheme
-            .bodyText1
+            .bodyLarge
             .copyWith(fontWeight: FontWeight.bold, fontSize: 16));
   }
 
@@ -107,12 +107,10 @@ class _UploadMaterialPageState extends State<UploadMaterialPage> {
       type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc', 'xlsx', 'xls'],
     );
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      final state = Provider.of<BatchMaterialState>(context, listen: false);
-      state.setFile = File(file.path);
+    PlatformFile file = result.files.first;
+    final state = Provider.of<BatchMaterialState>(context, listen: false);
+    state.setFile = File(file.path);
     }
-  }
 
   void saveVideo() async {
     final state = Provider.of<BatchMaterialState>(context, listen: false);
@@ -122,7 +120,7 @@ class _UploadMaterialPageState extends State<UploadMaterialPage> {
     if (!isTrue) {
       return;
     }
-    if (_link.text != null && _link.text.isNotEmpty) {
+    if (_link.text.isNotEmpty) {
       state.setArticleUrl(_link.text);
     }
 
@@ -232,55 +230,53 @@ class _UploadMaterialPageState extends State<UploadMaterialPage> {
                     Text("Browse file",
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2
+                            .bodyMedium
                             .copyWith(fontWeight: FontWeight.bold)),
                     Image.asset(Images.uploadVideo, height: 25).vP16,
                     Text("File should be PDF, DOCX, Sheet, Image",
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2
+                            .bodyMedium
                             .copyWith(fontSize: 12, color: PColors.gray)),
                   ],
                 ),
               ).ripple(pickFile),
               Consumer<BatchMaterialState>(
                 builder: (context, state, child) {
-                  if (state.file != null) {
-                    return SizedBox(
-                      height: 65,
-                      width: AppTheme.fullWidth(context),
-                      child: Column(
-                        children: <Widget>[
-                          Row(children: <Widget>[
-                            SizedBox(
-                                width: 50,
-                                child: Image.asset(
-                                  Images.getfiletypeIcon(
-                                      state.file.path.split(".").last),
-                                  height: 30,
-                                )),
-                            Text(state.file.path.split("/").last),
-                            Spacer(),
-                            IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.cancel),
-                                onPressed: () {
-                                  state.removeFile();
-                                })
-                          ]),
-                          Container(
-                            height: 5,
-                            margin: EdgeInsets.symmetric(horizontal: 16),
-                            width: AppTheme.fullWidth(context),
-                            decoration: BoxDecoration(
-                                color: Color(0xff0CC476),
-                                borderRadius: BorderRadius.circular(20)),
-                          )
-                        ],
-                      ),
-                    ).vP8;
-                  }
-                  return SizedBox();
+                  return SizedBox(
+                    height: 65,
+                    width: AppTheme.fullWidth(context),
+                    child: Column(
+                      children: <Widget>[
+                        Row(children: <Widget>[
+                          SizedBox(
+                              width: 50,
+                              child: Image.asset(
+                                Images.getfiletypeIcon(
+                                    state.file.path.split(".").last),
+                                height: 30,
+                              )),
+                          Text(state.file.path.split("/").last),
+                          Spacer(),
+                          IconButton(
+                              padding: EdgeInsets.zero,
+                              icon: Icon(Icons.cancel),
+                              onPressed: () {
+                                state.removeFile();
+                              })
+                        ]),
+                        Container(
+                          height: 5,
+                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          width: AppTheme.fullWidth(context),
+                          decoration: BoxDecoration(
+                              color: Color(0xff0CC476),
+                              borderRadius: BorderRadius.circular(20)),
+                        )
+                      ],
+                    ),
+                  ).vP8;
+                                  return SizedBox();
                 },
               ),
               Consumer<BatchMaterialState>(builder: (context, state, child) {

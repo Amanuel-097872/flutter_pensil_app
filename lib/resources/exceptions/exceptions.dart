@@ -6,7 +6,6 @@ class SchemeConsistencyException implements Exception {
   SchemeConsistencyException([this.message = 'Schemes consistency error']);
 
   String toString() {
-    if (message == null) return '$SchemeConsistencyException';
     return '$SchemeConsistencyException: $message';
   }
 }

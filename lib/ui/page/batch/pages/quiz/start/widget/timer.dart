@@ -84,7 +84,7 @@ class Countdown extends AnimatedWidget {
     return Text("$timerText min left",
         style: Theme.of(context)
             .textTheme
-            .bodyText1
+            .bodyLarge
             .copyWith(fontWeight: FontWeight.bold));
   }
 }

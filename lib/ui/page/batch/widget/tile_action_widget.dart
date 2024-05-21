@@ -26,7 +26,7 @@ class TileActionWidget extends StatelessWidget {
             onEdit();
             break;
           default:
-            if (onCustomIconPressed != null) onCustomIconPressed();
+            onCustomIconPressed();
         }
       },
       padding: EdgeInsets.zero,

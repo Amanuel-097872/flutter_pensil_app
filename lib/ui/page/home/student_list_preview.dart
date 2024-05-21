@@ -23,9 +23,6 @@ class StudentListPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (list == null) {
-      return SizedBox.shrink();
-    }
     final theme = Theme.of(context);
     return Container(
       width: 150,
@@ -37,7 +34,7 @@ class StudentListPreview extends StatelessWidget {
             return _wrapper(context,
                 index: index,
                 child: Text("+${list.length - 3}",
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge.copyWith(
                         fontSize: 10,
                         color: Theme.of(context).colorScheme.onPrimary)));
           }
@@ -46,7 +43,7 @@ class StudentListPreview extends StatelessWidget {
             index: index,
             child: Text(
               list[index].name.substring(0, 2).toUpperCase(),
-              style: Theme.of(context).textTheme.bodyText1.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge.copyWith(
                   fontSize: 10, color: Theme.of(context).colorScheme.onPrimary),
             ),
           );

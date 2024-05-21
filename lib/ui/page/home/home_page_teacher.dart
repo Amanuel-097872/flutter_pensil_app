@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/helper/images.dart';
 import 'package:flutter_pensil_app/model/actor_model.dart';
-import 'package:flutter_pensil_app/states/auth/auth_state.dart';
 import 'package:flutter_pensil_app/states/home_state.dart';
 import 'package:flutter_pensil_app/ui/kit/overlay_loader.dart';
 import 'package:flutter_pensil_app/ui/page/announcement/create_announcement.dart';
-import 'package:flutter_pensil_app/ui/page/auth/login.dart';
 import 'package:flutter_pensil_app/ui/page/batch/create_batch/create_batch.dart';
 import 'package:flutter_pensil_app/ui/page/home/home_Scaffold.dart';
 import 'package:flutter_pensil_app/ui/page/home/widget/announcement_widget.dart';
@@ -14,9 +12,7 @@ import 'package:flutter_pensil_app/ui/page/home/widget/poll_widget.dart';
 import 'package:flutter_pensil_app/ui/page/poll/View_all_poll_page.dart';
 import 'package:flutter_pensil_app/ui/page/poll/create_poll.dart';
 import 'package:flutter_pensil_app/ui/theme/theme.dart';
-import 'package:flutter_pensil_app/ui/widget/fab/animated_fab.dart';
 import 'package:flutter_pensil_app/ui/widget/fab/fab_button.dart';
-import 'package:flutter_pensil_app/ui/widget/p_loader.dart';
 import 'package:flutter_pensil_app/ui/widget/p_title_text.dart';
 import 'package:provider/provider.dart';
 
@@ -169,7 +165,6 @@ class _TeacherHomePageState extends State<TeacherHomePage>
         print("Notoficaion");
       },
       builder: (context, state, child) {
-        if (state.batchList == null) return Ploader();
         return CustomScrollView(
           slivers: <Widget>[
             FutureBuilder(
@@ -180,7 +175,7 @@ class _TeacherHomePageState extends State<TeacherHomePage>
                     child: Text("Hi, ${snapShot.data.name}",
                             style: Theme.of(context)
                                 .textTheme
-                                .headline6
+                                .titleLarge
                                 .copyWith(fontSize: 22))
                         .hP16
                         .pT(10),
@@ -190,7 +185,7 @@ class _TeacherHomePageState extends State<TeacherHomePage>
                 }
               },
             ),
-            if (!(state.batchList != null && state.batchList.isNotEmpty))
+            if (!(state.batchList.isNotEmpty))
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
@@ -208,13 +203,13 @@ class _TeacherHomePageState extends State<TeacherHomePage>
                           Text("You haven't created any batch yet",
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6
+                                  .titleLarge
                                   .copyWith(
                                     color: PColors.gray,
                                   )),
                           SizedBox(height: 10),
                           Text("Tap on below fab button to create new",
-                              style: Theme.of(context).textTheme.bodyText1),
+                              style: Theme.of(context).textTheme.bodyLarge),
                         ],
                       ),
                     ),
@@ -222,7 +217,7 @@ class _TeacherHomePageState extends State<TeacherHomePage>
                   ],
                 ),
               ),
-            if (state.batchList != null && state.batchList.isNotEmpty)
+            if (state.batchList.isNotEmpty)
               SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,52 +239,51 @@ class _TeacherHomePageState extends State<TeacherHomePage>
                   ],
                 ),
               ),
-            if (state.polls != null && state.allPolls != null) ...[
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    SizedBox(height: 16),
-                    Divider(),
-                  ],
-                ),
+            ...[
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  SizedBox(height: 16),
+                  Divider(),
+                ],
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    if (index == 0)
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          _title("Poll"),
-                          OutlineButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context, ViewAllPollPage.getRoute());
-                            },
-                            textColor: Theme.of(context).primaryColor,
-                            highlightedBorderColor:
-                                Theme.of(context).primaryColor,
-                            borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4)),
-                            child: Text("View All"),
-                          ).hP16
-                        ],
-                      );
-                    return PollWidget(
-                        model: state.polls[index - 1], loader: loader);
-                  },
-                  childCount: state.polls.length + 1,
-                ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (index == 0)
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        _title("Poll"),
+                        OutlineButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context, ViewAllPollPage.getRoute());
+                          },
+                          textColor: Theme.of(context).primaryColor,
+                          highlightedBorderColor:
+                              Theme.of(context).primaryColor,
+                          borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4)),
+                          child: Text("View All"),
+                        ).hP16
+                      ],
+                    );
+                  return PollWidget(
+                      model: state.polls[index - 1], loader: loader);
+                },
+                childCount: state.polls.length + 1,
               ),
-              SliverToBoxAdapter(
-                child: Divider(),
-              ),
-            ],
-            if (state.announcementList != null &&
-                state.announcementList.isNotEmpty)
+            ),
+            SliverToBoxAdapter(
+              child: Divider(),
+            ),
+          ],
+            if (state.announcementList.isNotEmpty)
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {

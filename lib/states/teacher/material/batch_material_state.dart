@@ -46,8 +46,6 @@ class BatchMaterialState extends BaseState {
 
   Future<bool> uploadMaterial(String title, String description) async {
     final data = await execute(() async {
-      assert(title != null);
-      assert(subject != null);
       var model = materialModel.copyWith(
           title: title,
           description: description,
@@ -60,10 +58,8 @@ class BatchMaterialState extends BaseState {
     }, label: "uploadMaterial");
 
     /// If received data from api and we have material to upload
-    if (data != null && file != null) {
-      await upload(data.id);
-    }
-    isBusy = false;
+    await upload(data.id);
+      isBusy = false;
     return true;
   }
 
@@ -83,10 +79,8 @@ class BatchMaterialState extends BaseState {
       final getit = GetIt.instance;
       final repo = getit.get<BatchRepository>();
       list = await repo.getBatchMaterialList(batchId);
-      if (list != null) {
-        list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      }
-      notifyListeners();
+      list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          notifyListeners();
       isBusy = false;
     }, label: "getBatchMaterialList");
   }

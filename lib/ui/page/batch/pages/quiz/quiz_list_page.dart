@@ -38,12 +38,12 @@ class _QuizListPageState extends State<QuizListPage> {
                 children: [
                   Text(
                     model.title,
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.titleSmall,
                     maxLines: 3,
                   ).vP4,
                   Text(
                     "Questions: ${model.questions}",
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.titleSmall,
                     maxLines: 3,
                   ).vP4,
                   // Text(

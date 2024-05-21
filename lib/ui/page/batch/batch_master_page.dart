@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/helper/images.dart';
@@ -7,7 +6,6 @@ import 'package:flutter_pensil_app/states/home_state.dart';
 import 'package:flutter_pensil_app/states/quiz/quiz_state.dart';
 import 'package:flutter_pensil_app/states/teacher/announcement_state.dart';
 import 'package:flutter_pensil_app/states/teacher/batch_detail_state.dart';
-import 'package:flutter_pensil_app/states/teacher/create_batch_state.dart';
 import 'package:flutter_pensil_app/states/teacher/material/batch_material_state.dart';
 import 'package:flutter_pensil_app/states/teacher/video/video_state.dart';
 import 'package:flutter_pensil_app/ui/kit/alert.dart';
@@ -100,9 +98,9 @@ class _BatchMasterDetailPageState extends State<BatchMasterDetailPage>
   @override
   void dispose() {
     showFabButton.dispose();
-    if (_animationController != null) _animationController.dispose();
+    _animationController.dispose();
     _tabController.dispose();
-    if (_controller != null) _controller.dispose();
+    _controller.dispose();
     currentPageNo.dispose();
     super.dispose();
   }
@@ -255,7 +253,7 @@ class _BatchMasterDetailPageState extends State<BatchMasterDetailPage>
           bottom: TabBar(
             controller: _tabController,
             isScrollable: true,
-            labelColor: Theme.of(context).textTheme.bodyText1.color,
+            labelColor: Theme.of(context).textTheme.bodyLarge.color,
             tabs: [
               Tab(text: "Detail"),
               Tab(text: "Videos"),

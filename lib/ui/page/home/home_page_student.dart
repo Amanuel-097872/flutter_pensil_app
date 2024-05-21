@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/helper/images.dart';
@@ -11,7 +10,6 @@ import 'package:flutter_pensil_app/ui/page/home/widget/poll_widget.dart';
 import 'package:flutter_pensil_app/ui/page/notification/notifications_page.dart';
 import 'package:flutter_pensil_app/ui/page/poll/View_all_poll_page.dart';
 import 'package:flutter_pensil_app/ui/theme/theme.dart';
-import 'package:flutter_pensil_app/ui/widget/p_loader.dart';
 import 'package:flutter_pensil_app/ui/widget/p_title_text.dart';
 import 'package:provider/provider.dart';
 
@@ -192,10 +190,9 @@ class _StudentHomePageState extends State<StudentHomePage>
         Navigator.push(context, NotificationPage.getRoute());
       },
       builder: (context, state, child) {
-        if (state.batchList == null) return Ploader();
         return CustomScrollView(
           slivers: <Widget>[
-            if (!(state.batchList != null && state.batchList.isNotEmpty))
+            if (!(state.batchList.isNotEmpty))
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
@@ -224,19 +221,19 @@ class _StudentHomePageState extends State<StudentHomePage>
                             Text("You have no batch",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline6
+                                    .titleLarge
                                     .copyWith(
                                       color: PColors.gray,
                                     )),
                             SizedBox(height: 10),
                             Text("Ask your teacher to add you in a batch!!",
-                                style: Theme.of(context).textTheme.bodyText1),
+                                style: Theme.of(context).textTheme.bodyLarge),
                           ],
                         ))
                   ],
                 ),
               ),
-            if (state.batchList != null && state.batchList.isNotEmpty)
+            if (state.batchList.isNotEmpty)
               SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,52 +258,51 @@ class _StudentHomePageState extends State<StudentHomePage>
                   ],
                 ),
               ),
-            if (state.polls != null && state.allPolls != null) ...[
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    SizedBox(height: 16),
-                    Divider(),
-                  ],
-                ),
+            ...[
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  SizedBox(height: 16),
+                  Divider(),
+                ],
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    if (index == 0)
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          PTitleText("Poll").hP16,
-                          OutlineButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context, ViewAllPollPage.getRoute());
-                            },
-                            textColor: Theme.of(context).primaryColor,
-                            highlightedBorderColor:
-                                Theme.of(context).primaryColor,
-                            borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4)),
-                            child: Text("View All"),
-                          ).hP16
-                        ],
-                      );
-                    return PollWidget(
-                        model: state.polls[index - 1], hideFinishButton: false);
-                  },
-                  childCount: state.polls.length + 1,
-                ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (index == 0)
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        PTitleText("Poll").hP16,
+                        OutlineButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context, ViewAllPollPage.getRoute());
+                          },
+                          textColor: Theme.of(context).primaryColor,
+                          highlightedBorderColor:
+                              Theme.of(context).primaryColor,
+                          borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4)),
+                          child: Text("View All"),
+                        ).hP16
+                      ],
+                    );
+                  return PollWidget(
+                      model: state.polls[index - 1], hideFinishButton: false);
+                },
+                childCount: state.polls.length + 1,
               ),
-              SliverToBoxAdapter(
-                child: Divider(),
-              ),
-            ],
-            if (state.announcementList != null &&
-                state.announcementList.isNotEmpty)
+            ),
+            SliverToBoxAdapter(
+              child: Divider(),
+            ),
+          ],
+            if (state.announcementList.isNotEmpty)
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {

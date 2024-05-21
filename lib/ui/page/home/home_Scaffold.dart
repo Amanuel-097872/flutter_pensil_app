@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/config/config.dart';
-import 'package:flutter_pensil_app/helper/images.dart';
 import 'package:flutter_pensil_app/states/auth/auth_state.dart';
 import 'package:flutter_pensil_app/states/home_state.dart';
 import 'package:flutter_pensil_app/ui/kit/alert.dart';

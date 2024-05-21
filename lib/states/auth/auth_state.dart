@@ -164,9 +164,6 @@ class AuthState extends BaseState {
       /// Record log in firebase kAnalytics about Google login
 
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        throw Exception('Google login cancelled by user');
-      }
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 

@@ -40,7 +40,7 @@ class HomeState extends BaseState {
       final getit = GetIt.instance;
       final repo = getit.get<BatchRepository>();
       announcementList = await repo.getAnnouncemantList();
-      if (announcementList != null && announcementList.isNotEmpty)
+      if (announcementList.isNotEmpty)
         announcementList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       notifyListeners();
     } catch (error) {
@@ -53,7 +53,7 @@ class HomeState extends BaseState {
     try {
       final repo = getit.get<BatchRepository>();
       polls = await repo.getPollList();
-      if (polls != null && polls.isNotEmpty) {
+      if (polls.isNotEmpty) {
         polls.sort((a, b) => b.createdAt.compareTo(a.createdAt));
         allPolls = List.from(polls);
         polls.removeWhere((poll) => poll.endTime.isBefore(DateTime.now()));
@@ -83,12 +83,10 @@ class HomeState extends BaseState {
       return await repo.castVoteOnPoll(poll.id, vote);
     }, label: "castVoteOnPoll");
 
-    if (model != null) {
-      var dt = polls.indexWhere((element) => element.id == model.id);
-      polls[dt] = model;
-      print("Voted sucess");
-    }
-    poll.selection.loading = false;
+    var dt = polls.indexWhere((element) => element.id == model.id);
+    polls[dt] = model;
+    print("Voted sucess");
+      poll.selection.loading = false;
     isBusy = false;
   }
 

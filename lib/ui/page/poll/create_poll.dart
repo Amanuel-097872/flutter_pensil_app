@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pensil_app/states/home_state.dart';
 import 'package:flutter_pensil_app/states/teacher/poll_state.dart';
-import 'package:flutter_pensil_app/ui/kit/alert.dart';
 import 'package:flutter_pensil_app/ui/page/poll/poll_option_widget.dart';
 import 'package:flutter_pensil_app/ui/theme/theme.dart';
 import 'package:flutter_pensil_app/ui/widget/form/p_textfield.dart';
@@ -54,7 +52,7 @@ class _CreateBatchState extends State<CreatePoll> {
         icon: Icon(Icons.add_circle, color: PColors.primary, size: 17),
         label: Text(
           label,
-          style: theme.textTheme.button
+          style: theme.textTheme.labelLarge
               .copyWith(color: PColors.primary, fontWeight: FontWeight.bold),
         ));
   }
@@ -63,12 +61,12 @@ class _CreateBatchState extends State<CreatePoll> {
     return Text(name,
         style: Theme.of(context)
             .textTheme
-            .bodyText1
+            .bodyLarge
             .copyWith(fontWeight: FontWeight.bold, fontSize: 16));
   }
 
   Widget _day(String text,
-      {Function onPressed, Widget child, bool isStartTime}) {
+      {Function onPressed, Widget child}) {
     final theme = Theme.of(context);
     return Container(
       height: 50,
@@ -83,8 +81,7 @@ class _CreateBatchState extends State<CreatePoll> {
                 SizedBox(
                   height: 50,
                   child: Stack(
-                    overflow: Overflow.clip,
-                    alignment: Alignment.center,
+                    clipBehavior: Clip.hardEdge, alignment: Alignment.center,
                     children: <Widget>[
                       Align(
                           alignment: Alignment.centerRight,
@@ -143,19 +140,12 @@ class _CreateBatchState extends State<CreatePoll> {
 
     final newPoll = await state.createPoll(_question.text);
     isLoading.value = false;
-    if (newPoll != null) {
-      // Alert.sucess(context,
-      //     message: "Poll created sucessfully!!", title: "Message");
-      final homeState = context.read<HomeState>();
-      homeState.getPollList();
-      Navigator.pop(context);
-    } else {
-      Alert.sucess(context,
-          message: "Some error occured. Please try again in some time!!",
-          title: "Message",
-          height: 170);
+    // Alert.sucess(context,
+    //     message: "Poll created sucessfully!!", title: "Message");
+    final homeState = context.read<HomeState>();
+    homeState.getPollList();
+    Navigator.pop(context);
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,8 +182,7 @@ class _CreateBatchState extends State<CreatePoll> {
                         icon: SizedBox(
                             height: 50,
                             child: Stack(
-                              overflow: Overflow.clip,
-                              alignment: Alignment.center,
+                              clipBehavior: Clip.hardEdge, alignment: Alignment.center,
                               children: <Widget>[
                                 Align(
                                     alignment: Alignment.centerRight,

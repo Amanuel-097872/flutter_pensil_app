@@ -35,11 +35,11 @@ class _NotificationPageState extends State<NotificationPage> {
         child: ListTile(
           title: Text(model.title,
               style:
-                  Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14)),
+                  Theme.of(context).textTheme.bodyLarge.copyWith(fontSize: 14)),
           trailing: Text(
               Utility.getPassedTime(model.createdAt.toIso8601String()),
               style:
-                  Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 12)),
+                  Theme.of(context).textTheme.titleMedium.copyWith(fontSize: 12)),
         ));
   }
 
@@ -51,14 +51,13 @@ class _NotificationPageState extends State<NotificationPage> {
         child: Consumer<NotificationState>(
           builder: (context, state, child) {
             if (state.isLoading) return Ploader();
-            if (state.notifications != null && state.notifications.isNotEmpty)
+            if (state.notifications.isNotEmpty)
               return ListView.builder(
                   itemCount: state.notifications.length,
                   itemBuilder: (context, index) {
                     return _notificationTile(state.notifications[index]);
                   });
-            if (!(state.notifications != null &&
-                state.notifications.isNotEmpty))
+            if (!(state.notifications.isNotEmpty))
               return Center(
                 child: Container(
                   height: 100,
@@ -71,7 +70,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     children: <Widget>[
                       Text(
                         "You have no notification",
-                        style: Theme.of(context).textTheme.headline6.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge.copyWith(
                               color: PColors.gray,
                             ),
                       ),
